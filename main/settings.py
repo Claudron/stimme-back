@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'custom_user.apps.CustomUserConfig',
     'rest_framework',
     # 'djoser',
+    'django_seed',
+    'api_test',
 ]
 
 MIDDLEWARE = [
