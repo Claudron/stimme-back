@@ -11,7 +11,6 @@ def content_list(request):
     queryset = Content.objects.all()
     serializer = ContentSerializer(queryset, many=True)
     return Response(serializer.data)
-    
 
 
 @api_view()
@@ -19,6 +18,3 @@ def content_detail(request, id):
     content = Content.objects.get(pk=id)
     serializer = ContentSerializer(content)
     return Response(serializer.data)
-
-
-
