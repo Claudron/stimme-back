@@ -3,7 +3,7 @@ import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 
 
-interface Post {
+export interface Post {
     id: number;
     title: string;
   }

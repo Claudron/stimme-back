@@ -1,5 +1,6 @@
-import { Text } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import usePosts from "../hooks/usePosts";
+import PostCard from "./PostCard";
 
 const PostGrid = () => {
   const { posts, error } = usePosts();
@@ -7,11 +8,15 @@ const PostGrid = () => {
   return (
     <>
       {error && <Text>{error}</Text>}
-      <ul>
+      <SimpleGrid
+        columns={{ sm: 2, md: 3, lg: 4, xl: 5 }}
+        padding="10px"
+        spacing={6}
+      >
         {posts.map((post) => (
-          <li key={post.id}>{post.title}</li>
+          <PostCard key={post.id} post={post} />
         ))}
-      </ul>
+      </SimpleGrid>
     </>
   );
 };
