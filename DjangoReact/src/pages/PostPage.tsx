@@ -1,10 +1,8 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import NavBar from "./components/NavBar";
-import PostGrid from "./components/PostGrid";
-import { useEffect } from "react";
-import axios from "axios";
+import NavBar from "../components/NavBar";
+import PostGrid from "../components/PostGrid";
 
-function App() {
+const Posts = () => {
   // useEffect(() => {
   //   const url = "/apitest/content";
   //   axios.get(url).then((response) => {
@@ -23,13 +21,12 @@ function App() {
         lg: "200px 1fr",
       }}
     >
-      <GridItem area="nav">
-        <NavBar></NavBar>
-      </GridItem>
       <GridItem area="aside">Aside</GridItem>
-      <GridItem area="main"><PostGrid /></GridItem>
+      <GridItem area="main">
+        <PostGrid />
+      </GridItem>
     </Grid>
   );
-}
+};
 
-export default App;
+export default Posts;

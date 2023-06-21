@@ -1,11 +1,12 @@
 import { HStack, Image } from "@chakra-ui/react";
-import logo from "../assets/logo.webp";
 import ColrModeSwitch from "./ColorModeSwitch";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <HStack justifyContent={"space-between"} padding="10px">
-      <Image src={logo} boxSize="60px" />
+      <Link to="/">Home</Link>
+      <Link to="/posts">Videos</Link>
       <ColrModeSwitch />
     </HStack>
   );
