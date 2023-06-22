@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django_use_email_as_username.apps.DjangoUseEmailAsUsernameConfig',
     'custom_user.apps.CustomUserConfig',
     'rest_framework',
-    # 'djoser',
+    'djoser',
     'django_seed',
     'api_test',
 ]
@@ -136,6 +136,12 @@ REST_FRAMEWORK = {
     ),
 }
 
-# SIMPLE_JWT = {
-#    'AUTH_HEADER_TYPES': ('JWT',),
-# }
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'api_test.serializers.UserCreateSerializer'
+    }
+}
