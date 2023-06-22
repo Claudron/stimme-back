@@ -6,7 +6,7 @@ const NavBar = () => {
   return (
     <HStack justifyContent={"space-between"} padding="10px">
       <Link to="/">Home</Link>
-      <Link to="/posts">Videos</Link>
+      <Link to="/posts">Posts</Link>
       <ColrModeSwitch />
     </HStack>
   );

@@ -3,7 +3,7 @@ import usePosts from "../hooks/usePosts";
 import PostCard from "./PostCard";
 
 const PostGrid = () => {
-  const { posts, error } = usePosts();
+  const { data, error } = usePosts();
 
   return (
     <>
@@ -13,7 +13,7 @@ const PostGrid = () => {
         padding="10px"
         spacing={6}
       >
-        {posts.map((post) => (
+        {data.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
       </SimpleGrid>
