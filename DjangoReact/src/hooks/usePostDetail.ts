@@ -1,33 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+
 
 
 export interface Post {
-    id: number;
-    title: string;
-  }
-
-const usePostDetail = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [error, setError] = useState("");
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    apiClient
-      .get("/content", {signal: controller.signal})
-      .then((res) => setPosts(res.data))
-      .catch((err) => {
-        // return because of double render in strict mode
-        if (err instanceof CanceledError) return;
-        setError(err.message)});
-
-    return () => controller.abort();  
-  }, []);
-
-  return { posts, error };
-
+  id: number;
+  title: string;
+  body: string;
 }
+
+const usePostDetail = (id: string) => useQuery<Post, Error>({
+  queryKey:['posts', id],
+  queryFn: () => 
+    apiClient
+      .get<Post>(`/content/${id}`)
+      .then(res => res.data),
+});
 
 export default usePostDetail;

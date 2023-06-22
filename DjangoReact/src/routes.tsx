@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import Posts from "./pages/PostPage";
+import PostDetailPage from "./pages/PostDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -10,7 +11,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "posts/", element: <Posts /> },
-      // { path: "videos/:id", element: <PostDetailPage /> },
+      { path: "posts/:id", element: <PostDetailPage /> },
     ],
   },
 ]);

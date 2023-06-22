@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import APIClient from "../services/api-client";
 import apiClient from "../services/api-client";
 
 export interface Post {
@@ -6,6 +7,7 @@ export interface Post {
     title: string;
   }
 
+  
 const usePosts = () => useQuery<Post[], Error>({
   queryKey: ['posts'],
   queryFn: () => 
