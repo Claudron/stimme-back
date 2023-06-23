@@ -11,7 +11,7 @@ const usePosts = () => useQuery<Post[], Error>({
   queryKey: ['posts'],
   queryFn: () => 
     apiClient
-      .get<Post[]>('/content').then(res => res.data)
+      .get<Post[]>('/api/content').then(res => res.data)
 });
 
 export default usePosts;
