@@ -8,10 +8,14 @@ import {
 import React, { useState } from "react";
 import apiClient from "../services/api-client";
 import useAuthStore from "../auth/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { accessToken, refreshToken, setTokens } = useAuthStore();
+  const { accessToken, refreshToken, userEmail, setTokens, setUserEmail } =
+    useAuthStore();
+
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -22,9 +26,11 @@ const LoginPage = () => {
     event.preventDefault();
     try {
       const response = await apiClient.post("/auth/jwt/create/", formData);
-      const { access, refresh } = response.data; // Assuming the response object contains access and refresh tokens
-      setTokens(access, refresh); // Store the tokens in Zustand
-      console.log("API response:", response.data);
+      const { access, refresh } = response.data;
+      setTokens(access, refresh);
+      setUserEmail(formData.email);
+      setFormData({ email: "", password: "" });
+      navigate("/");
     } catch (error) {
       console.error("API error:", error);
     }
@@ -32,6 +38,7 @@ const LoginPage = () => {
 
   console.log("ZUSTAND Access Token:", accessToken);
   console.log("ZUSTAND Refresh Token:", refreshToken);
+  console.log("ZUSTAND UserEmail", userEmail);
 
   return (
     <SimpleGrid padding={2}>
