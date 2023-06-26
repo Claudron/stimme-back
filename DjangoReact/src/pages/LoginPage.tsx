@@ -12,8 +12,14 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { accessToken, refreshToken, userEmail, setTokens, setUserEmail } =
-    useAuthStore();
+  const {
+    accessToken,
+    refreshToken,
+    setAccessToken,
+    setRefreshToken,
+    userEmail,
+    setUserEmail,
+  } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -27,7 +33,8 @@ const LoginPage = () => {
     try {
       const response = await apiClient.post("/auth/jwt/create/", formData);
       const { access, refresh } = response.data;
-      setTokens(access, refresh);
+      setAccessToken(access);
+      setRefreshToken(refresh);
       setUserEmail(formData.email);
       setFormData({ email: "", password: "" });
       navigate("/");

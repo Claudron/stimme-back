@@ -20,6 +20,8 @@ const NavBar = () => {
     <HStack justifyContent={"space-between"} padding="10px">
       <Link to="/">Home</Link>
       <Link to="/posts">Posts</Link>
+      <Link to="/dashboard">Dashboard</Link>
+      <Link to="/download">Downloads</Link>
       {!userEmail && <Link to="/login">Login</Link>}
       {userEmail && <Text>Hello {userEmail}</Text>}
       {userEmail && <ChakraLink onClick={handleLogout}>Logout</ChakraLink>}
