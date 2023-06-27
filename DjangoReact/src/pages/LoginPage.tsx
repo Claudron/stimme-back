@@ -19,6 +19,8 @@ const LoginPage = () => {
     setRefreshToken,
     userEmail,
     setUserEmail,
+    isAuthenticated,
+    setIsAuthenticated,
   } = useAuthStore();
 
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const LoginPage = () => {
       setAccessToken(access);
       setRefreshToken(refresh);
       setUserEmail(formData.email);
+      setIsAuthenticated(true);
       setFormData({ email: "", password: "" });
       navigate("/");
     } catch (error) {
@@ -46,6 +49,7 @@ const LoginPage = () => {
   console.log("ZUSTAND Access Token:", accessToken);
   console.log("ZUSTAND Refresh Token:", refreshToken);
   console.log("ZUSTAND UserEmail", userEmail);
+  console.log("ZUSTAND Authenticated", isAuthenticated);
 
   return (
     <SimpleGrid padding={2}>

@@ -13,6 +13,7 @@ const NavBar = () => {
   const handleLogout = () => {
     resetUserData.clearTokens();
     resetUserData.clearUserEmail();
+    resetUserData.setIsAuthenticated(false);
     navigate("/login");
   };
 

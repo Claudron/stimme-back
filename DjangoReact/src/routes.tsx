@@ -6,6 +6,7 @@ import PostDetailPage from "./pages/PostDetailPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import DownloadPage from "./pages/DownloadPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -13,10 +14,15 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "login/", element: <LoginPage /> },
+    ],
+  },
+  {
+    element: <PrivateRoute />,
+    children: [
       { path: "posts/", element: <Posts /> },
       { path: "dashboard/", element: <DashboardPage /> },
       { path: "download/", element: <DownloadPage /> },
-      { path: "login/", element: <LoginPage /> },
       { path: "posts/:id", element: <PostDetailPage /> },
     ],
   },
