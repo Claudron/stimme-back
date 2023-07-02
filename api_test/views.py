@@ -1,6 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from rest_framework.decorators import api_view
+from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
 from .serializers import ContentSerializer
@@ -65,12 +63,23 @@ class RefreshTokenView(SimpleJWTTokenRefreshView):
         return response
 
 
+class LogoutView(APIView):
+    def post(self, request):
+        try:
+            response = Response({"detail": "Logout successful"}, status=status.HTTP_200_OK)
+            response.delete_cookie("refresh_token")
+            response.delete_cookie("access_token")
+            return response
+        except (InvalidToken, TokenError) as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class CookieJWTAuthentication(JWTAuthentication):
     def authenticate(self, request):
         header = self.get_header(request)
         if header is None:
             raw_token = request.COOKIES.get(
-                'access_token')  # or whatever key you use
+                    'access_token')  # or whatever key you use
         else:
             raw_token = self.get_raw_token(header)
 

@@ -3,18 +3,26 @@ import ColrModeSwitch from "./ColorModeSwitch";
 import { Link, useNavigate } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import useAuthStore from "../auth/useAuthStore"; // Import your Zustand store
+import useLogout from "../hooks/useLogout";
 
 const NavBar = () => {
   // Get the user email from Zustand store
   const userEmail = useAuthStore((state) => state.userEmail);
   const resetUserData = useAuthStore();
   const navigate = useNavigate();
+  const logout = useLogout();
 
-  const handleLogout = () => {
-    resetUserData.clearTokens();
-    resetUserData.clearUserEmail();
-    resetUserData.setIsAuthenticated(false);
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await logout();
+      // resetUserData.clearTokens();
+      // resetUserData.clearUserEmail();
+      resetUserData.setIsAuthenticated(false);
+      navigate("/login");
+    } catch (error) {
+      // Handle the logout error
+      console.error(error);
+    }
   };
 
   return (

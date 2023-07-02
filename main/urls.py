@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from api_test.views import TokenCreateView
 from api_test.views import RefreshTokenView
+from api_test.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/jwt/create/', TokenCreateView.as_view(), name='token_create'),
     path('auth/jwt/refresh/', RefreshTokenView.as_view(), name='token_refresh'),
+    path('auth/logout', LogoutView.as_view(), name='logout'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('api/', include('api_test.urls')),
