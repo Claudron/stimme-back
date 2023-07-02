@@ -21,9 +21,9 @@ const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       { path: "posts/", element: <Posts /> },
+      { path: "posts/:id", element: <PostDetailPage /> },
       { path: "dashboard/", element: <DashboardPage /> },
       { path: "download/", element: <DownloadPage /> },
-      { path: "posts/:id", element: <PostDetailPage /> },
     ],
   },
 ]);

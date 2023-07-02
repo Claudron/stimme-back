@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -132,12 +133,16 @@ AUTH_USER_MODEL = 'custom_user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'api_test.cookieAuth.CookieJWTAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ),
 }
 
+
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
+    # "ACCESS_TOKEN_LIFETIME": timedelta(seconds=30),
 }
 
 DJOSER = {
@@ -145,3 +150,26 @@ DJOSER = {
         'user_create': 'api_test.serializers.UserCreateSerializer'
     }
 }
+
+
+# CORS
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',  # This is the domain of your Vite server, not Django
+]
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+
+# CSRF
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+]
+CSRF_COOKIE_SECURE = False  # Vite is probably not using HTTPS
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+
+# Session
+SESSION_COOKIE_SECURE = False  # Vite is probably not using HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'

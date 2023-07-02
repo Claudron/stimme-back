@@ -15,3 +15,4 @@ const usePosts = () => useQuery<Post[], Error>({
 });
 
 export default usePosts;
+

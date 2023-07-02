@@ -13,8 +13,9 @@ const usePostDetail = (id: string) => useQuery<Post, Error>({
   queryKey:['posts', id],
   queryFn: () => 
     apiClient
-      .get<Post>(`/content/${id}`)
+      .get<Post>(`/api/content/${id}`)
       .then(res => res.data),
 });
 
 export default usePostDetail;
+
