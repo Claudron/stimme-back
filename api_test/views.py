@@ -84,3 +84,10 @@ class CookieJWTAuthentication(JWTAuthentication):
         validated_token = self.get_validated_token(raw_token)
 
         return self.get_user(validated_token), validated_token
+
+
+class AuthStatusView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"authenticated": True}, status=status.HTTP_200_OK)

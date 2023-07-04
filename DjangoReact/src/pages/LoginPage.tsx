@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { setIsAuthenticated } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -26,7 +25,6 @@ const LoginPage = () => {
     try {
       const response = await apiClient.post("/auth/jwt/create/", formData);
       console.log(response.data);
-      setIsAuthenticated(true);
       setFormData({ email: "", password: "" });
       navigate("/");
     } catch (error) {

@@ -35,8 +35,4 @@ apiClient.interceptors.response.use(
 
 export default apiClient;
 
-export const axiosPrivate = axios.create({
-    baseURL: BASE_URL,
-    headers: {'Content-Type': 'application/json'},
-    withCredentials: true // This is required for sending cookies automatically with each request
-})
+

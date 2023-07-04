@@ -6,7 +6,7 @@ interface AuthState {
 }
   
 const useAuthStore = create<AuthState>((set) => ({
-    isAuthenticated: false,
+    isAuthenticated: true, // set to true for now to enable consisten login!!!
     setIsAuthenticated: (value) => set((state) => ({...state, isAuthenticated: value})),
 }));
   
