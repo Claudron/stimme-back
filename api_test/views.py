@@ -2,18 +2,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
 from .serializers import ContentSerializer
-
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from rest_framework_simplejwt.tokens import RefreshToken
-
-
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from rest_framework_simplejwt.views import TokenRefreshView as SimpleJWTTokenRefreshView
-
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 
@@ -66,7 +60,8 @@ class RefreshTokenView(SimpleJWTTokenRefreshView):
 class LogoutView(APIView):
     def post(self, request):
         try:
-            response = Response({"detail": "Logout successful"}, status=status.HTTP_200_OK)
+            response = Response(
+                {"detail": "Logout successful"}, status=status.HTTP_200_OK)
             response.delete_cookie("refresh_token")
             response.delete_cookie("access_token")
             return response
@@ -79,7 +74,7 @@ class CookieJWTAuthentication(JWTAuthentication):
         header = self.get_header(request)
         if header is None:
             raw_token = request.COOKIES.get(
-                    'access_token')  # or whatever key you use
+                'access_token')  # or whatever key you use
         else:
             raw_token = self.get_raw_token(header)
 

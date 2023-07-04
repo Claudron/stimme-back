@@ -2,12 +2,11 @@ import { HStack, Text } from "@chakra-ui/react";
 import ColrModeSwitch from "./ColorModeSwitch";
 import { Link, useNavigate } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
-import useAuthStore from "../auth/useAuthStore"; // Import your Zustand store
+import useAuthStore from "../auth/useAuthStore";
 import useLogout from "../hooks/useLogout";
 
 const NavBar = () => {
-  // Get the user email from Zustand store
-  const userEmail = useAuthStore((state) => state.userEmail);
+  const { isAuthenticated } = useAuthStore();
   const resetUserData = useAuthStore();
   const navigate = useNavigate();
   const logout = useLogout();
@@ -15,12 +14,9 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      // resetUserData.clearTokens();
-      // resetUserData.clearUserEmail();
       resetUserData.setIsAuthenticated(false);
       navigate("/login");
     } catch (error) {
-      // Handle the logout error
       console.error(error);
     }
   };
@@ -31,9 +27,11 @@ const NavBar = () => {
       <Link to="/posts">Posts</Link>
       <Link to="/dashboard">Dashboard</Link>
       <Link to="/download">Downloads</Link>
-      {!userEmail && <Link to="/login">Login</Link>}
-      {userEmail && <Text>Hello {userEmail}</Text>}
-      {userEmail && <ChakraLink onClick={handleLogout}>Logout</ChakraLink>}
+      {!isAuthenticated && <Link to="/login">Login</Link>}
+      {isAuthenticated && <Text>Hello There Student</Text>}
+      {isAuthenticated && (
+        <ChakraLink onClick={handleLogout}>Logout</ChakraLink>
+      )}
       <ColrModeSwitch />
     </HStack>
   );

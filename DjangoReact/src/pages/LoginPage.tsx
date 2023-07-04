@@ -12,16 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const {
-    accessToken,
-    refreshToken,
-    setAccessToken,
-    setRefreshToken,
-    userEmail,
-    setUserEmail,
-    isAuthenticated,
-    setIsAuthenticated,
-  } = useAuthStore();
+  const { setIsAuthenticated } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -34,10 +25,7 @@ const LoginPage = () => {
     event.preventDefault();
     try {
       const response = await apiClient.post("/auth/jwt/create/", formData);
-      const { access, refresh } = response.data;
-      setAccessToken(access);
-      setRefreshToken(refresh);
-      setUserEmail(formData.email);
+      console.log(response.data);
       setIsAuthenticated(true);
       setFormData({ email: "", password: "" });
       navigate("/");
@@ -45,11 +33,6 @@ const LoginPage = () => {
       console.error("API error:", error);
     }
   };
-
-  console.log("ZUSTAND Access Token:", accessToken);
-  console.log("ZUSTAND Refresh Token:", refreshToken);
-  console.log("ZUSTAND UserEmail", userEmail);
-  console.log("ZUSTAND Authenticated", isAuthenticated);
 
   return (
     <SimpleGrid padding={2}>
