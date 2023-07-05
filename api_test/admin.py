@@ -1,6 +1,10 @@
 from django.contrib import admin
 from . import models
 
-# Register your models here.
 
-admin.site.register(models.Content)
+class ContentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+    ordering = ('title', 'id',)
+
+
+admin.site.register(models.Content, ContentAdmin)
