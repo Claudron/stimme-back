@@ -6,9 +6,8 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import apiClient from "../services/api-client";
-import useAuthStore from "../auth/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../services/api-client";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });

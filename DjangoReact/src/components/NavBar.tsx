@@ -1,13 +1,9 @@
-import { HStack, Text } from "@chakra-ui/react";
-import ColrModeSwitch from "./ColorModeSwitch";
+import { Link as ChakraLink, HStack } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-import { Link as ChakraLink } from "@chakra-ui/react";
-import useAuthStore from "../auth/useAuthStore";
 import useLogout from "../hooks/useLogout";
+import ColrModeSwitch from "./ColorModeSwitch";
 
 const NavBar = () => {
-  const { isAuthenticated } = useAuthStore();
-  // const resetUserData = useAuthStore();
   const navigate = useNavigate();
   const logout = useLogout();
 
