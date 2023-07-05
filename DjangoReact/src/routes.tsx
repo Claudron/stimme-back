@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import DownloadPage from "./pages/DownloadPage";
 import PrivateRoute from "./components/PrivateRoute";
+import UserAccount from "./pages/UserAccount";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "posts/:id", element: <PostDetailPage /> },
       { path: "dashboard/", element: <DashboardPage /> },
       { path: "download/", element: <DownloadPage /> },
+      { path: "account/", element: <UserAccount /> },
     ],
   },
 ]);
