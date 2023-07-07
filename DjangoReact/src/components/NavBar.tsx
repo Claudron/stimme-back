@@ -23,7 +23,7 @@ const NavBar = () => {
       <Link to="/posts">Posts</Link>
       <Link to="/dashboard">Dashboard</Link>
       <Link to="/download">Downloads</Link>
-      <Link to="/Account">Account</Link>
+      <Link to="/account">Account</Link>
       <ChakraLink onClick={handleLogout}>Logout</ChakraLink>
       <ColrModeSwitch />
     </HStack>
