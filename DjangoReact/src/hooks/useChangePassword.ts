@@ -13,6 +13,10 @@ const changePassword = async (passwordData: ChangePasswordData) => {
     return true;
   }
 
+  if (response.data) {
+    throw new Error(response.data.detail);
+  }
+
   throw new Error('Error changing password');
 }
 

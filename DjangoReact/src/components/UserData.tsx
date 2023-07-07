@@ -24,10 +24,26 @@ const UserData = () => {
     if (currentPasswordRef.current && newPasswordRef.current) {
       const currentPassword = currentPasswordRef.current.value;
       const newPassword = newPasswordRef.current.value;
-      changePasswordMutation.mutate({
-        current_password: currentPassword,
-        new_password: newPassword,
-      });
+
+      changePasswordMutation.mutate(
+        { current_password: currentPassword, new_password: newPassword },
+        {
+          // Reset form fields when mutation is successful
+          onSuccess: () => {
+            if (currentPasswordRef.current && newPasswordRef.current) {
+              currentPasswordRef.current.value = "";
+              newPasswordRef.current.value = "";
+            }
+          },
+          // Optionally, reset form fields even when the mutation fails
+          onError: () => {
+            if (currentPasswordRef.current && newPasswordRef.current) {
+              currentPasswordRef.current.value = "";
+              newPasswordRef.current.value = "";
+            }
+          },
+        }
+      );
     }
   };
 
@@ -79,6 +95,13 @@ const UserData = () => {
             <button type="submit">Change password</button>
           </form>
         </Box>
+        {changePasswordMutation.isLoading && <div>Changing password...</div>}
+        {changePasswordMutation.isError && (
+          <div>Error: {changePasswordMutation.error.message}</div>
+        )}
+        {changePasswordMutation.isSuccess && (
+          <div>Password has been changed successfully</div>
+        )}
       </>
     );
   }
