@@ -1,4 +1,13 @@
-import { Box, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import useUserData from "../hooks/useUserData";
 import useChangePassword from "../hooks/useChangePassword";
 import { useRef } from "react";
@@ -59,6 +68,7 @@ const UserData = () => {
           boxShadow="lg"
           marginBottom={5}
         >
+          <Heading marginBottom={5}>Your Account</Heading>
           <VStack align="start">
             <Text fontSize="xl">Email: {data.email}</Text>
             <Text fontSize="xl">First Name:{data.first_name}</Text>
@@ -72,27 +82,29 @@ const UserData = () => {
           boxShadow="lg"
           marginBottom={5}
         >
-          <h1>Change password:</h1>
+          <Heading marginBottom={5}>Change Password</Heading>
           <form onSubmit={handleSubmit}>
-            <label>
-              Current password:
-              <input
-                ref={currentPasswordRef}
-                type="password"
-                name="currentPassword"
-                required
-              />
-            </label>
-            <label>
-              New password:
-              <input
-                ref={newPasswordRef}
-                type="password"
-                name="newPassword"
-                required
-              />
-            </label>
-            <button type="submit">Change password</button>
+            <FormControl>
+              <FormLabel>
+                Current password:
+                <Input
+                  ref={currentPasswordRef}
+                  type="password"
+                  name="currentPassword"
+                  required
+                />
+              </FormLabel>
+              <FormLabel>
+                New password:
+                <Input
+                  ref={newPasswordRef}
+                  type="password"
+                  name="newPassword"
+                  required
+                />
+              </FormLabel>
+              <Button type="submit">Change password</Button>
+            </FormControl>
           </form>
         </Box>
         {changePasswordMutation.isLoading && <div>Changing password...</div>}
