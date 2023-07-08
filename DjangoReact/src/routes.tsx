@@ -1,14 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "./pages/Layout";
-import HomePage from "./pages/HomePage";
-import Posts from "./pages/PostPage";
-import PostDetailPage from "./pages/PostDetailPage";
-import LoginPage from "./pages/LoginPage";
+import PrivateRoute from "./components/PrivateRoute";
 import DashboardPage from "./pages/DashboardPage";
 import DownloadPage from "./pages/DownloadPage";
-import PrivateRoute from "./components/PrivateRoute";
-import UserData from "./components/UserData";
-import UserAccountPage from "./pages/UserProfile";
+import HomePage from "./pages/HomePage";
+import Layout from "./pages/Layout";
+import LoginPage from "./pages/LoginPage";
+import PostDetailPage from "./pages/PostDetailPage";
+import Posts from "./pages/PostPage";
+import UserAccountPage from "./pages/UserAccountPage";
 
 const router = createBrowserRouter([
   {
