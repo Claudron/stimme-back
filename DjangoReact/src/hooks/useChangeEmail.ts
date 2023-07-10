@@ -2,13 +2,17 @@ import { useMutation } from '@tanstack/react-query';
 import apiClient from '../services/api-client';
 
 interface ChangeEmailData {
-  new_email: string;
+    email: string;
 }
 
 const changeEmail = async (emailData: ChangeEmailData) => {
-  const response = await apiClient.post('/auth/users/set_email/', emailData, { withCredentials: true });
+    console.log(emailData);
 
-  if (response.status === 204) {
+  const response = await apiClient.patch('/auth/users/me/', emailData, { withCredentials: true });
+
+  console.log(response); 
+
+  if (response.status === 204 || response.status === 200) {
     return true;
   }
 

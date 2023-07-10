@@ -8,7 +8,7 @@ class CookieJWTAuthentication(JWTAuthentication):
             raw_token = request.COOKIES.get(
                 'access_token')  # or whatever key you use
             # add this line for debugging
-            print(f'Got token from cookies: {raw_token}')
+            # print(f'Got token from cookies: {raw_token}')
         else:
             raw_token = self.get_raw_token(header)
 

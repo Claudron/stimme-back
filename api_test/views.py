@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import Content
 from .serializers import ContentSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
+from djoser.views import UserViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
