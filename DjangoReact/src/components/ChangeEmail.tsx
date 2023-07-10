@@ -62,7 +62,10 @@ const ChangeEmail = () => {
         <div>Error: {changeEmailMutation.error.message}</div>
       )}
       {changeEmailMutation.isSuccess && (
-        <div>Email has been changed successfully</div>
+        <div>
+          <p>Email has been changed successfully.</p>
+          <p>Please refresh the page</p>
+        </div>
       )}
     </Box>
   );
