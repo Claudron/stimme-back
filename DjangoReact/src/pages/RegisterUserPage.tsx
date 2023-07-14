@@ -1,9 +1,11 @@
 import {
+  Box,
   Button,
   FormControl,
   FormLabel,
   Input,
   SimpleGrid,
+  Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import useCreateUser from "../hooks/useCreateUser";
@@ -111,6 +113,19 @@ const RegisterUserPage = () => {
           Register
         </Button>
       </form>
+      {createUserMutation.isSuccess && (
+        <Box mt={5}>
+          <Text color="green.500">User registered successfully!</Text>
+        </Box>
+      )}
+
+      {createUserMutation.isError && (
+        <Box mt={5}>
+          <Text color="red.500">
+            An error occurred: {createUserMutation.error.message}
+          </Text>
+        </Box>
+      )}
     </SimpleGrid>
   );
 };
