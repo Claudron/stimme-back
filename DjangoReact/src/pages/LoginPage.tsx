@@ -2,11 +2,13 @@ import {
   Button,
   FormControl,
   FormLabel,
+  HStack,
   Input,
   SimpleGrid,
+  Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../services/api-client";
 
 const LoginPage = () => {
@@ -40,7 +42,7 @@ const LoginPage = () => {
             type="email"
             name="email"
             value={formData.email}
-            onSubmit={handleChange}
+            onChange={handleChange}
           />
         </FormControl>
         <FormControl>
@@ -49,13 +51,16 @@ const LoginPage = () => {
             type="password"
             name="password"
             value={formData.password}
-            onSubmit={handleChange}
+            onChange={handleChange}
           />
         </FormControl>
         <Button type="submit" marginTop={5}>
           Login
         </Button>
       </form>
+      <HStack marginTop={3}>
+        <Link to="/register">Donthave an account? Please register.</Link>
+      </HStack>
     </SimpleGrid>
   );
 };

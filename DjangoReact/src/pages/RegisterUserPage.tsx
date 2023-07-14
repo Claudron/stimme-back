@@ -3,12 +3,14 @@ import {
   Button,
   FormControl,
   FormLabel,
+  HStack,
   Input,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import useCreateUser from "../hooks/useCreateUser";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterUserPage = () => {
   const [formData, setFormData] = useState({
@@ -27,6 +29,7 @@ const RegisterUserPage = () => {
   };
 
   const createUserMutation = useCreateUser();
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(formData);
@@ -47,6 +50,9 @@ const RegisterUserPage = () => {
           first_name: "",
           last_name: "",
         });
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       },
       // Optionally, reset form field even when the mutation fails
       onError: () => {
@@ -126,6 +132,9 @@ const RegisterUserPage = () => {
           </Text>
         </Box>
       )}
+      <HStack marginTop={3}>
+        <Link to="/login">Have an account already? Please log in.</Link>
+      </HStack>
     </SimpleGrid>
   );
 };
