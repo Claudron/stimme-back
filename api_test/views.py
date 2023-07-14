@@ -1,12 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
-from .serializers import ContentSerializer
+from django.contrib.auth import get_user_model
+from .serializers import ContentSerializer,  UserCreateSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authentication import BaseAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenRefreshView as SimpleJWTTokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
@@ -29,6 +31,29 @@ class ContentDetail(APIView):
         serializer = ContentSerializer(content)
         return Response(serializer.data)
 
+
+# User creation
+
+class CreateUserView(APIView):
+    authentication_classes = []  # Override global setting
+    permission_classes = []  # This makes the view publicly accessible
+
+    def post(self, request, format=None):
+        serialized = UserCreateSerializer(data=request.data)
+        if serialized.is_valid():
+            user_model = get_user_model()
+            user_model.objects.create_user(
+                email=serialized.validated_data['email'],
+                password=serialized.validated_data['password'],
+                first_name=serialized.validated_data['first_name'],
+                last_name=serialized.validated_data['last_name']
+            )
+            return Response({"status": "User created successfully"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#  Auth Token
 
 class TokenCreateView(DjoserTokenCreateView):
     authentication_classes = []

@@ -12,7 +12,7 @@ const RegisterUserPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "", // New field
+    confirmPassword: "",
     first_name: "",
     last_name: "",
   });
@@ -41,7 +41,7 @@ const RegisterUserPage = () => {
         setFormData({
           email: "",
           password: "",
-          confirmPassword: "", // Reset this field too
+          confirmPassword: "",
           first_name: "",
           last_name: "",
         });
@@ -51,7 +51,7 @@ const RegisterUserPage = () => {
         setFormData({
           email: "",
           password: "",
-          confirmPassword: "", // Reset this field too
+          confirmPassword: "",
           first_name: "",
           last_name: "",
         });
