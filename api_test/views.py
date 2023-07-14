@@ -92,3 +92,6 @@ class AuthStatusView(APIView):
 
     def get(self, request):
         return Response({"authenticated": True}, status=status.HTTP_200_OK)
+
+
+# Email Test

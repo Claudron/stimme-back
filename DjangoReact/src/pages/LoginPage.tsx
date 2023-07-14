@@ -40,7 +40,7 @@ const LoginPage = () => {
             type="email"
             name="email"
             value={formData.email}
-            onChange={handleChange}
+            onSubmit={handleChange}
           />
         </FormControl>
         <FormControl>
@@ -49,7 +49,7 @@ const LoginPage = () => {
             type="password"
             name="password"
             value={formData.password}
-            onChange={handleChange}
+            onSubmit={handleChange}
           />
         </FormControl>
         <Button type="submit" marginTop={5}>
