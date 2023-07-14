@@ -52,7 +52,7 @@ const RegisterUserPage = () => {
         });
         setTimeout(() => {
           navigate("/login");
-        }, 3000);
+        }, 2500);
       },
       // Optionally, reset form field even when the mutation fails
       onError: () => {
@@ -121,7 +121,9 @@ const RegisterUserPage = () => {
       </form>
       {createUserMutation.isSuccess && (
         <Box mt={5}>
-          <Text color="green.500">User registered successfully!</Text>
+          <Text color="green.500">
+            User registered successfully! Please Login.
+          </Text>
         </Box>
       )}
 
