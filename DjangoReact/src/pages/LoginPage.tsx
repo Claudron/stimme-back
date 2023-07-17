@@ -13,6 +13,7 @@ import apiClient from "../services/api-client";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       console.error("API error:", error);
+      setError("Invalid credentials. Please try again.");
     }
   };
 
@@ -58,8 +60,9 @@ const LoginPage = () => {
           Login
         </Button>
       </form>
+      {error && <Text color="red.500">{error}</Text>}
       <HStack marginTop={3}>
-        <Link to="/register">Donthave an account? Please register.</Link>
+        <Link to="/register">Dont have an account? Please register.</Link>
       </HStack>
     </SimpleGrid>
   );
