@@ -1,3 +1,7 @@
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.core.mail import send_mail, mail_admins, BadHeaderError
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
@@ -120,3 +124,16 @@ class AuthStatusView(APIView):
 
 
 # Email Test
+
+# if you send more than one email use send_mass_mail
+
+
+def test_email(request):
+    try:
+        send_mail('subject', 'message',
+                  'test@claudron.com', ['jane@gmail.com'])
+        # Return a response if the email was sent successfully
+        return HttpResponse('Email sent successfully')
+    except BadHeaderError:
+        # Return a response if there was an error
+        return HttpResponse('Invalid header found')
