@@ -4,12 +4,16 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.mail import send_mail, mail_admins, BadHeaderError
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
 from .serializers import ContentSerializer,  UserCreateSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
+from djoser.email import ActivationEmail
+from djoser import utils
+from djoser.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -140,3 +144,22 @@ def test_email(request):
     except BadHeaderError:
         # Return a response if there was an error
         return HttpResponse('Invalid header found')
+    
+
+# this overrides the djoser activation emaili and using the localhost:5173
+# instead of the http://127.0.0.1:8000 of the backendserver. This has to be changed in production!!!
+# also check which tmaplate is beeing send
+
+class CustomActivationEmail(ActivationEmail):
+    template_name = "email/activation.html"
+
+    def get_context_data(self):
+      
+        context = super().get_context_data()
+
+        user = context.get("user")
+        context["uid"] = utils.encode_uid(user.pk)
+        context["token"] = default_token_generator.make_token(user)
+        context["domain"] = "localhost:5173"
+        context["url"] = settings.ACTIVATION_URL.format(**context)
+        return context

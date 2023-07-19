@@ -149,13 +149,16 @@ SIMPLE_JWT = {
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'user_create': 'api_test.serializers.UserCreateSerializer',
         'current_user': 'api_test.serializers.UserSerializer',
 
-    }
+    },
+    'EMAIL': {
+        'activation': 'api_test.views.CustomActivationEmail',
+    },
 }
 
 
@@ -195,3 +198,5 @@ DEFAULT_FROM_EMAIL = 'from@claudron.com'
 # EMAIL_HOST_USER = '59716b937de272'
 # EMAIL_HOST_PASSWORD = '76542f00ee4401'
 # EMAIL_PORT = '2525'
+
+
