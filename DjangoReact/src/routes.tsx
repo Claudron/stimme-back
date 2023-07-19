@@ -9,6 +9,7 @@ import PostDetailPage from "./pages/PostDetailPage";
 import Posts from "./pages/PostPage";
 import RegisterUserPage from "./pages/RegisterUserPage";
 import UserAccountPage from "./pages/UserAccountPage";
+import UserActivationPage from "./pages/UserActivationPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "login/", element: <LoginPage /> },
       { path: "register/", element: <RegisterUserPage /> },
+      { path: "activate/:uid/:token", element: <UserActivationPage /> },
     ],
   },
   {

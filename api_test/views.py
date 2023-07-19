@@ -1,11 +1,12 @@
+from templated_mail.mail import BaseEmailMessage
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.mail import send_mail, mail_admins, BadHeaderError
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
-from django.contrib.auth import get_user_model
 from .serializers import ContentSerializer,  UserCreateSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
@@ -38,23 +39,23 @@ class ContentDetail(APIView):
 
 # User creation
 
-class CreateUserView(APIView):
-    authentication_classes = []  # Override global setting
-    permission_classes = []  # This makes the view publicly accessible
+# class CreateUserView(APIView):
+#     authentication_classes = []  # Override global setting
+#     permission_classes = []  # This makes the view publicly accessible
 
-    def post(self, request, format=None):
-        serialized = UserCreateSerializer(data=request.data)
-        if serialized.is_valid():
-            user_model = get_user_model()
-            user_model.objects.create_user(
-                email=serialized.validated_data['email'],
-                password=serialized.validated_data['password'],
-                first_name=serialized.validated_data['first_name'],
-                last_name=serialized.validated_data['last_name']
-            )
-            return Response({"status": "User created successfully"}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request, format=None):
+#         serialized = UserCreateSerializer(data=request.data)
+#         if serialized.is_valid():
+#             user_model = get_user_model()
+#             user_model.objects.create_user(
+#                 email=serialized.validated_data['email'],
+#                 password=serialized.validated_data['password'],
+#                 first_name=serialized.validated_data['first_name'],
+#                 last_name=serialized.validated_data['last_name']
+#             )
+#             return Response({"status": "User created successfully"}, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 #  Auth Token
@@ -124,14 +125,16 @@ class AuthStatusView(APIView):
 
 
 # Email Test
-
 # if you send more than one email use send_mass_mail
 
 
 def test_email(request):
     try:
-        send_mail('subject', 'message',
-                  'test@claudron.com', ['jane@gmail.com'])
+        message = BaseEmailMessage(
+            template_name='emails/test_email.html',
+            context={'name': 'Claudron'}
+        )
+        message.send(['jane@gmail.com'])
         # Return a response if the email was sent successfully
         return HttpResponse('Email sent successfully')
     except BadHeaderError:

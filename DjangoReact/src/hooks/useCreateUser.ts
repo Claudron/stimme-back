@@ -12,7 +12,7 @@ interface CreateUser {
 
 
 const createUser = async (userData:CreateUser) => {
-    const response = await apiClient.post('/user/register/', userData);
+    const response = await apiClient.post('auth/users/', userData);
   
     if (response.status === 201) { // Assuming a 201 status code for a successful creation
       return response.data;
