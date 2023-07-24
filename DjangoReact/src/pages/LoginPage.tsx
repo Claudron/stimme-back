@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../services/api-client";
 
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -29,9 +30,15 @@ const LoginPage = () => {
       console.log(response.data);
       setFormData({ email: "", password: "" });
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {  // `any` type used for simplicity; consider defining a specific error type
       console.error("API error:", error);
-      setError("Invalid credentials. Please try again.");
+  
+      // Check if `error.response`, `error.response.data`, and `error.response.data.detail` exist
+      if (error.response && error.response.data && error.response.data.detail) {
+        setError(error.response.data.detail);
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 

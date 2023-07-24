@@ -143,6 +143,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
+    "USER_AUTHENTICATION_RULE": "api_test.custom_authentication.custom_user_authentication_rule",
     'AUTH_HEADER_TYPES': ('JWT',),
     # "ACCESS_TOKEN_LIFETIME": timedelta(seconds=30),
 }
@@ -160,6 +161,10 @@ DJOSER = {
         'activation': 'api_test.views.CustomActivationEmail',
     },
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+]
 
 
 # CORS
@@ -198,5 +203,3 @@ DEFAULT_FROM_EMAIL = 'from@claudron.com'
 # EMAIL_HOST_USER = '59716b937de272'
 # EMAIL_HOST_PASSWORD = '76542f00ee4401'
 # EMAIL_PORT = '2525'
-
-

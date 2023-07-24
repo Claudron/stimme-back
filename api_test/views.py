@@ -1,3 +1,7 @@
+from rest_framework_simplejwt.views import TokenViewBase
+from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken, TokenError
+from .serializers import CustomTokenObtainPairSerializer, InActiveUser
+from django.contrib.auth.forms import AuthenticationForm
 from templated_mail.mail import BaseEmailMessage
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
@@ -8,7 +12,7 @@ from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Content
-from .serializers import ContentSerializer,  UserCreateSerializer
+from .serializers import ContentSerializer,  UserCreateSerializer, CustomTokenObtainPairSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
 from djoser.email import ActivationEmail
@@ -66,10 +70,12 @@ class ContentDetail(APIView):
 
 class TokenCreateView(DjoserTokenCreateView):
     authentication_classes = []
+    serializer_class = CustomTokenObtainPairSerializer
 
     def _action(self, serializer):
         self.user = serializer.user
         token = RefreshToken.for_user(self.user)
+
         response = Response({"detail": "Success"})
         response.set_cookie("access_token", str(
             token.access_token), httponly=True)
@@ -109,7 +115,7 @@ class CookieJWTAuthentication(JWTAuthentication):
         header = self.get_header(request)
         if header is None:
             raw_token = request.COOKIES.get(
-                'access_token')  # or whatever key you use
+                'access_token')
         else:
             raw_token = self.get_raw_token(header)
 
@@ -144,7 +150,7 @@ def test_email(request):
     except BadHeaderError:
         # Return a response if there was an error
         return HttpResponse('Invalid header found')
-    
+
 
 # this overrides the djoser activation emaili and using the localhost:5173
 # instead of the http://127.0.0.1:8000 of the backendserver. This has to be changed in production!!!
@@ -154,7 +160,7 @@ class CustomActivationEmail(ActivationEmail):
     template_name = "email/activation.html"
 
     def get_context_data(self):
-      
+
         context = super().get_context_data()
 
         user = context.get("user")
