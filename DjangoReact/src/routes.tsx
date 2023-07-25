@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import Posts from "./pages/PostPage";
 import RegisterUserPage from "./pages/RegisterUserPage";
+import SendActivationEmailSuccessPage from "./pages/SendActivationEmailSuccess";
 import UserAccountPage from "./pages/UserAccountPage";
 import UserActivationPage from "./pages/UserActivationPage";
 
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "login/", element: <LoginPage /> },
       { path: "register/", element: <RegisterUserPage /> },
       { path: "activate/:uid/:token", element: <UserActivationPage /> },
+      { path: "resend_activation/", element: <SendActivationEmailSuccessPage /> },
     ],
   },
   {
