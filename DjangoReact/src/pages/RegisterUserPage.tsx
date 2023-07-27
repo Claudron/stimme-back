@@ -11,6 +11,8 @@ import {
 import React, { useState } from "react";
 import useCreateUser from "../hooks/useCreateUser";
 import { Link, useNavigate } from "react-router-dom";
+import { Link as ReachLink } from "react-router-dom";
+import { Link as ChakraLink } from "@chakra-ui/react";
 
 const RegisterUserPage = () => {
   const [formData, setFormData] = useState({
@@ -134,8 +136,11 @@ const RegisterUserPage = () => {
           </Text>
         </Box>
       )}
-      <HStack marginTop={3}>
-        <Link to="/login">Have an account already? Please log in.</Link>
+      <HStack mt={3}>
+        <Text>Have an account already?</Text>
+        <ChakraLink as={ReachLink} to="/login" color="blue.200">
+          Please log in.
+        </ChakraLink>
       </HStack>
     </SimpleGrid>
   );
