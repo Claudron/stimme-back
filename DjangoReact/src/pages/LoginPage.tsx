@@ -10,8 +10,7 @@ import {
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../services/api-client";
-import { useResendActivationEmail } from "../hooks/useResendActivationEmail"; // Replace with the actual path to the hook
-
+import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -31,7 +30,7 @@ const LoginPage = () => {
       const response = await apiClient.post("/auth/jwt/create/", formData);
       console.log(response.data);
       setFormData({ email: "", password: "" });
-      navigate("/");
+      navigate("/posts");
     } catch (error: any) {
       // `any` type used for simplicity; consider defining a specific error type
       console.error("API error:", error);

@@ -2,6 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 import { Box } from "@chakra-ui/react";
 import usePersistLogin from "../hooks/usePersistLogin";
+import PrivateNavBar from "./PrivateNavBar";
 
 const PrivateRoute = () => {
   const { isAuthenticated, isLoading } = usePersistLogin();
@@ -16,7 +17,7 @@ const PrivateRoute = () => {
 
   return (
     <>
-      <NavBar />
+      <PrivateNavBar />
       <Box padding={5}>
         <Outlet />
       </Box>

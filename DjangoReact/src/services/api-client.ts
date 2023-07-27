@@ -14,10 +14,15 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Check if the request was for the registration endpoint
-    if (originalRequest.url === '/user/register/') {
+    // // Check if the request was for the registration endpoint
+    // if (originalRequest.url === '/user/register/') {
+    //   return Promise.reject(error);
+    // }
+    // Check if the request was for the resend_activation endpoint
+    if (originalRequest.url === '/auth/users/resend_activation/') {
       return Promise.reject(error);
     }
+
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import apiClient from '../services/api-client';
 import User from '../entities/user';
-import useUserDataStore from '../store/useUserDataStore';
+import apiClient from '../services/api-client';
 
 
 
