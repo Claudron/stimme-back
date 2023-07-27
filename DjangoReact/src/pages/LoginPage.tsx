@@ -7,8 +7,10 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Link as ReachLink } from "react-router-dom";
 import apiClient from "../services/api-client";
 import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
 const LoginPage = () => {
@@ -32,20 +34,23 @@ const LoginPage = () => {
       setFormData({ email: "", password: "" });
       navigate("/posts");
     } catch (error: any) {
-      // `any` type used for simplicity; consider defining a specific error type
-      console.error("API error:", error);
-
-      // Check if `error.response`, `error.response.data`, and `error.response.data.detail` exist
       if (error.response && error.response.data && error.response.data.detail) {
-        setError(error.response.data.detail);
+        let errorMessage = error.response.data.detail;
 
-        // Check if the error detail message indicates that the user is inactive
         if (
           error.response.data.detail ===
           "User is not active, please confirm your email"
         ) {
           setIsUserInactive(true);
         }
+
+        if (
+          errorMessage === "No active account found with the given credentials"
+        ) {
+          errorMessage = "The email or password is incorrect.";
+        }
+
+        setError(errorMessage);
       } else {
         setError("An error occurred. Please try again.");
       }
@@ -65,7 +70,17 @@ const LoginPage = () => {
           />
         </FormControl>
         <FormControl>
-          <FormLabel>Password</FormLabel>
+          <FormLabel>
+            Password
+            <ChakraLink
+              as={ReachLink}
+              to="/reset-password"
+              color="blue.200"
+              ml={2}
+            >
+              Forgot password?
+            </ChakraLink>
+          </FormLabel>
           <Input
             type="password"
             name="password"
@@ -77,8 +92,11 @@ const LoginPage = () => {
           Login
         </Button>
         {error && <Text color="red.500">{error}</Text>}
-        <HStack marginTop={3}>
-          <Link to="/register">Dont have an account? Please register.</Link>
+        <HStack mt={3}>
+        <Text>Don't have an account?</Text>
+          <ChakraLink as={ReachLink} to="/register" color="blue.200">
+             Please register.
+          </ChakraLink>
         </HStack>
         {isUserInactive && (
           <>
