@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import { AbsoluteCenter, Button, Heading } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useActivateUser from "../hooks/useActivateUser"; // Update the import path to your hook
-import { Text, AbsoluteCenter, Heading} from "@chakra-ui/react";
+import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
 
 interface RouteParams {
   uid: string;
@@ -12,6 +13,8 @@ interface RouteParams {
 const UserActivationPage = () => {
   const { uid, token } = useParams<RouteParams>();
   const { mutate, ...mutation } = useActivateUser();
+  // const resendActivationEmail = useResendActivationEmail();
+  // Implement resend activation email hook?
 
   useEffect(() => {
     if (uid && token) {
@@ -19,26 +22,26 @@ const UserActivationPage = () => {
     }
   }, [uid, token, mutate]);
 
-  // Handle loading, error, and success states
   let content;
+
   if (mutation.isLoading) {
     content = <Heading>Activating account...</Heading>;
   } else if (mutation.isError) {
-    // Ensure error is an instance of Error before accessing message property
-    const errorMessage =
-      mutation.error instanceof Error
-        ? mutation.error.message
-        : "An error occurred";
-    content = <Heading>{errorMessage}</Heading>;
+    let errorMessage = mutation.error.message;
+    console.log("SERVER: " + errorMessage);
+
+    if (errorMessage === "Stale token for given user.") {
+      errorMessage =
+        "Link no longer valid. Request new activation email or login";
+      content = <Heading>{errorMessage}</Heading>;
+    } else {
+      content = <Heading>{errorMessage}</Heading>;
+    }
   } else if (mutation.isSuccess) {
     content = <Heading>Account activated successfully!</Heading>;
   }
 
-  return (
-    <AbsoluteCenter>
-      {content}
-    </AbsoluteCenter>
-  );
+  return <AbsoluteCenter>{content}</AbsoluteCenter>;
 };
 
 export default UserActivationPage;

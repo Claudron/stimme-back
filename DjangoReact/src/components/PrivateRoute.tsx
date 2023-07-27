@@ -1,6 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
-import NavBar from "./NavBar";
 import { Box } from "@chakra-ui/react";
+import { Navigate, Outlet } from "react-router-dom";
 import usePersistLogin from "../hooks/usePersistLogin";
 import PrivateNavBar from "./PrivateNavBar";
 
