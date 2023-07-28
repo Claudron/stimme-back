@@ -11,6 +11,7 @@ import RegisterUserPage from "./pages/RegisterUserPage";
 import SendActivationEmailSuccessPage from "./pages/SendActivationEmailSuccess";
 import UserAccountPage from "./pages/UserAccountPage";
 import UserActivationPage from "./pages/UserActivationPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "register/", element: <RegisterUserPage /> },
       { path: "activate/:uid/:token", element: <UserActivationPage /> },
       { path: "resend_activation/", element: <SendActivationEmailSuccessPage /> },
+      { path: "reset-password/", element: <ResetPasswordPage /> },
     ],
   },
   {
