@@ -1,12 +1,14 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   HStack,
   Input,
   SimpleGrid,
   Text,
+
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import useCreateUser from "../hooks/useCreateUser";
@@ -70,6 +72,8 @@ const RegisterUserPage = () => {
   };
 
   return (
+    <Flex height="50vh" justifyContent="center" alignItems="center">
+    <Box width="450px" padding={4} borderColor="blackAlpha 50" borderWidth="1px" borderRadius={10}>
     <SimpleGrid padding={2}>
       <form onSubmit={handleSubmit}>
         <FormControl>
@@ -143,6 +147,8 @@ const RegisterUserPage = () => {
         </ChakraLink>
       </HStack>
     </SimpleGrid>
+    </Box>
+    </Flex>
   );
 };
 

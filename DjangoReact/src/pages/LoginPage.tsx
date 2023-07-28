@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
   HStack,
@@ -58,6 +60,8 @@ const LoginPage = () => {
   };
 
   return (
+    <Flex height="50vh" justifyContent="center" alignItems="center">
+    <Box width="450px" padding={4} borderColor="blackAlpha 50" borderWidth="1px" borderRadius={10}>
     <SimpleGrid padding={2}>
       <form onSubmit={handleSubmit}>
         <FormControl>
@@ -115,6 +119,8 @@ const LoginPage = () => {
         )}
       </form>
     </SimpleGrid>
+    </Box>
+    </Flex>
   );
 };
 
