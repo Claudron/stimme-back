@@ -15,7 +15,7 @@ from .models import Content
 from .serializers import ContentSerializer,  UserCreateSerializer, CustomTokenObtainPairSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
-from djoser.email import ActivationEmail
+from djoser.email import ActivationEmail, PasswordResetEmail
 from djoser import utils
 from djoser.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -152,9 +152,10 @@ def test_email(request):
         return HttpResponse('Invalid header found')
 
 
-# this overrides the djoser activation emaili and using the localhost:5173
+# this overrides the djoser emails and using the localhost:5173
 # instead of the http://127.0.0.1:8000 of the backendserver. This has to be changed in production!!!
-# also check which tmaplate is beeing send
+# It uses the djoser templates
+# these views have to be set in the djoser settings in settings.py
 
 class CustomActivationEmail(ActivationEmail):
     template_name = "email/activation.html"
@@ -168,4 +169,18 @@ class CustomActivationEmail(ActivationEmail):
         context["token"] = default_token_generator.make_token(user)
         context["domain"] = "localhost:5173"
         context["url"] = settings.ACTIVATION_URL.format(**context)
+        return context
+
+class CustomPasswordResetEmail(PasswordResetEmail):
+    template_name = "email/password_reset.html"
+
+    def get_context_data(self):
+
+        context = super().get_context_data()
+
+        user = context.get("user")
+        context["uid"] = utils.encode_uid(user.pk)
+        context["token"] = default_token_generator.make_token(user)
+        context["domain"] = "localhost:5173"
+        context["url"] =  settings.PASSWORD_RESET_CONFIRM_URL.format(**context)
         return context

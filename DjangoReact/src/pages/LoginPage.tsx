@@ -8,6 +8,10 @@ import {
   Input,
   SimpleGrid,
   Text,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -15,6 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Link as ReachLink } from "react-router-dom";
 import apiClient from "../services/api-client";
 import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -95,7 +100,13 @@ const LoginPage = () => {
         <Button type="submit" marginTop={5}>
           Login
         </Button>
-        {error && <Text color="red.500">{error}</Text>}
+        {error && 
+          <Alert status="error" marginTop={5}>
+            <AlertIcon />
+            <AlertTitle mr={2}>Error:</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        }
         <HStack mt={3}>
         <Text>Don't have an account?</Text>
           <ChakraLink as={ReachLink} to="/register" color="blue.200">

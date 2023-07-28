@@ -8,7 +8,11 @@ import {
   Input,
   SimpleGrid,
   Text,
-
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import useCreateUser from "../hooks/useCreateUser";
@@ -25,6 +29,8 @@ const RegisterUserPage = () => {
     last_name: "",
   });
 
+  
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -34,13 +40,15 @@ const RegisterUserPage = () => {
 
   const createUserMutation = useCreateUser();
   const navigate = useNavigate();
+  
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(formData);
 
     // Check if password and confirmPassword match
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
 
@@ -126,19 +134,19 @@ const RegisterUserPage = () => {
         </Button>
       </form>
       {createUserMutation.isSuccess && (
-        <Box mt={5}>
-          <Text color="green.500">
-            User registered successfully! Please Login.
-          </Text>
-        </Box>
+        <Alert status="success" mt={5}>
+          <AlertIcon />
+          <AlertTitle mr={2}>Success:</AlertTitle>
+          <AlertDescription>User registered successfully! Please Login.</AlertDescription>
+        </Alert>
       )}
 
       {createUserMutation.isError && (
-        <Box mt={5}>
-          <Text color="red.500">
-            An error occurred: {createUserMutation.error.message}
-          </Text>
-        </Box>
+        <Alert status="error" mt={5}>
+          <AlertIcon />
+          <AlertTitle mr={2}>Error:</AlertTitle>
+          <AlertDescription>An error occurred: {createUserMutation.error.message}</AlertDescription>
+        </Alert>
       )}
       <HStack mt={3}>
         <Text>Have an account already?</Text>
