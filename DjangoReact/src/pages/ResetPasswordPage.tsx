@@ -5,15 +5,17 @@ import {
   FormLabel,
   Heading,
   Input,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
-import useResetPassword from "../hooks/useRestPassword"; // Ensure the correct import path
+import useResetPassword from "../hooks/useRestPassword";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 const ResetPasswordPage = () => {
   const location = useLocation();
   const path = location.pathname;
-  const [_, uid, token] = path.split("/").slice(-3); // Adjust this based on your URL structure
+  const [_, uid, token] = path.split("/").slice(-3);
 
   const newPasswordRef = useRef<HTMLInputElement>(null);
   const reNewPasswordRef = useRef<HTMLInputElement>(null);
@@ -70,10 +72,16 @@ const ResetPasswordPage = () => {
       </form>
       {resetPasswordMutation.isLoading && <div>Changing password...</div>}
       {resetPasswordMutation.isError && (
-        <div>Error: {resetPasswordMutation.error.message}</div>
+        <Alert status="error">
+          <AlertIcon />
+          {resetPasswordMutation.error.message}
+        </Alert>
       )}
       {resetPasswordMutation.isSuccess && (
-        <div>Password has been changed successfully</div>
+        <Alert status="success">
+          <AlertIcon />
+          Password has been changed successfully
+        </Alert>
       )}
     </Box>
   );
