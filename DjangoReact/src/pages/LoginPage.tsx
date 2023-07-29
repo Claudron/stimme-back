@@ -12,6 +12,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Container,
 } from "@chakra-ui/react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -65,73 +66,82 @@ const LoginPage = () => {
   };
 
   return (
-    <Flex height="50vh" justifyContent="center" alignItems="center">
-    <Box width="450px" padding={4} borderColor="blackAlpha 50" borderWidth="1px" borderRadius={10}>
-    <SimpleGrid padding={2}>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel>Email address</FormLabel>
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>
-            Password
-            <ChakraLink
-              as={ReachLink}
-              to="/reset-password"
-              color="blue.200"
-              ml={2}
-            >
-              Forgot password?
-            </ChakraLink>
-          </FormLabel>
-          <Input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <Button type="submit" marginTop={5}>
-          Login
-        </Button>
-        {error && 
-          <Alert status="error" marginTop={5}>
-            <AlertIcon />
-            <AlertTitle mr={2}>Error:</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        }
-        <HStack mt={3}>
-        <Text>Don't have an account?</Text>
-          <ChakraLink as={ReachLink} to="/register" color="blue.200">
-             Please register.
-          </ChakraLink>
-        </HStack>
-        {isUserInactive && (
-          <>
-            <Text marginTop={5}>
-              Resend activation email for: {formData.email} ?
-            </Text>
-            <Button
-              onClick={() =>
-                resendActivationEmail.mutate({ email: formData.email })
-              }
-              marginTop={5}
-            >
-              Resend
-            </Button>
-          </>
-        )}
-      </form>
-    </SimpleGrid>
-    </Box>
-    </Flex>
+    <Container justifyContent="center" alignItems="center">
+      <Flex>
+        <Box
+          width="500px"
+          padding={4}
+          marginTop={5}
+          borderColor="blackAlpha 50"
+          borderWidth="1px"
+          borderRadius={10}
+        >
+          <SimpleGrid padding={2}>
+            <form onSubmit={handleSubmit}>
+              <FormControl>
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>
+                  Password
+                  <ChakraLink
+                    as={ReachLink}
+                    to="/reset-password"
+                    color="blue.200"
+                    ml={2}
+                  >
+                    Forgot password?
+                  </ChakraLink>
+                </FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <Button type="submit" marginTop={5}>
+                Login
+              </Button>
+              {error && (
+                <Alert status="error" marginTop={5}>
+                  <AlertIcon />
+                  <AlertTitle mr={2}>Error:</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+              <HStack mt={3}>
+                <Text>Don't have an account?</Text>
+                <ChakraLink as={ReachLink} to="/register" color="blue.200">
+                  Please register.
+                </ChakraLink>
+              </HStack>
+              {isUserInactive && (
+                <>
+                  <Text marginTop={5}>
+                    Resend activation email for: {formData.email} ?
+                  </Text>
+                  <Button
+                    onClick={() =>
+                      resendActivationEmail.mutate({ email: formData.email })
+                    }
+                    marginTop={5}
+                  >
+                    Resend
+                  </Button>
+                </>
+              )}
+            </form>
+          </SimpleGrid>
+        </Box>
+      </Flex>
+    </Container>
   );
 };
 

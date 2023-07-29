@@ -6,13 +6,14 @@ import {
   Box,
   Button,
   Link as ChakraLink,
+  Container,
   Flex,
   FormControl,
   FormLabel,
   HStack,
   Input,
   SimpleGrid,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link as ReachLink } from "react-router-dom";
@@ -27,8 +28,6 @@ const RegisterUserPage = () => {
     last_name: "",
   });
 
-  
-
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +38,6 @@ const RegisterUserPage = () => {
   };
 
   const createUserMutation = useCreateUser();
-
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,98 +60,110 @@ const RegisterUserPage = () => {
           last_name: "",
         });
         setError(null);
-        
       },
     });
   };
 
   return (
-    <Flex height="80vh" justifyContent="center" alignItems="center">
-      <Box width="500px" padding={4} borderColor="blackAlpha 50" borderWidth="1px" borderRadius={10}>
-        <SimpleGrid padding={2}>
-          <form onSubmit={handleSubmit}>
-            <FormControl>
-              <FormLabel>Email address</FormLabel>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Confirm Password</FormLabel>
-              <Input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>First Name</FormLabel>
-              <Input
-                type="text"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Last Name</FormLabel>
-              <Input
-                type="text"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-              />
-            </FormControl>
-            <Button type="submit" marginTop={5}>
-              Register
-            </Button>
-          </form>
-          {createUserMutation.isSuccess && (
-            <Alert status="success" mt={5}>
-              <AlertIcon />
-              <AlertTitle mr={2}>Success:</AlertTitle>
-              <AlertDescription>User registered successfully! Please check your inbox for the activation email.</AlertDescription>
-            </Alert>
-          )}
+    <Container height="80vh" justifyContent="center" alignItems="center">
+      <Flex>
+        <Box
+          width="500px"
+          padding={4}
+          borderColor="blackAlpha 50"
+          borderWidth="1px"
+          borderRadius={10}
+        >
+          <SimpleGrid padding={2}>
+            <form onSubmit={handleSubmit}>
+              <FormControl>
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Confirm Password</FormLabel>
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>First Name</FormLabel>
+                <Input
+                  type="text"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Last Name</FormLabel>
+                <Input
+                  type="text"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <Button type="submit" marginTop={5}>
+                Register
+              </Button>
+            </form>
+            {createUserMutation.isSuccess && (
+              <Alert status="success" mt={5}>
+                <AlertIcon />
+                <AlertTitle mr={2}>Success:</AlertTitle>
+                <AlertDescription>
+                  User registered successfully! Please check your inbox for the
+                  activation email.
+                </AlertDescription>
+              </Alert>
+            )}
 
-          {createUserMutation.isError && (
-            <Alert status="error" mt={5}>
-              <AlertIcon />
-              <AlertTitle mr={2}>Error:</AlertTitle>
-              <AlertDescription>An error occurred: {createUserMutation.error.message}</AlertDescription>
-            </Alert>
-          )}
+            {createUserMutation.isError && (
+              <Alert status="error" mt={5}>
+                <AlertIcon />
+                <AlertTitle mr={2}>Error:</AlertTitle>
+                <AlertDescription>
+                  An error occurred: {createUserMutation.error.message}
+                </AlertDescription>
+              </Alert>
+            )}
 
-          {error && (
-            <Alert status="error" mt={5}>
-              <AlertIcon />
-              <AlertTitle mr={2}>Error:</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+            {error && (
+              <Alert status="error" mt={5}>
+                <AlertIcon />
+                <AlertTitle mr={2}>Error:</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-          <HStack mt={3}>
-            <Text>Have an account already?</Text>
-            <ChakraLink as={ReachLink} to="/login" color="blue.200">
-              Please log in.
-            </ChakraLink>
-          </HStack>
-        </SimpleGrid>
-      </Box>
-    </Flex>
+            <HStack mt={3}>
+              <Text>Have an account already?</Text>
+              <ChakraLink as={ReachLink} to="/login" color="blue.200">
+                Please log in.
+              </ChakraLink>
+            </HStack>
+          </SimpleGrid>
+        </Box>
+      </Flex>
+    </Container>
   );
 };
 
