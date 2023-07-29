@@ -29,7 +29,7 @@ const resetPassword = async (data: Email) => {
   throw new Error('Error resetting password');
 };
 
-export const useResetPassword = () => {
+export const useRequestResetPassword = () => {
 
   return useMutation({
     mutationFn: resetPassword,

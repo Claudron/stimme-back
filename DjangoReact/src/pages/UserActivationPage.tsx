@@ -1,8 +1,7 @@
-import { AbsoluteCenter, Button, Heading } from "@chakra-ui/react";
+import { AbsoluteCenter, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useActivateUser from "../hooks/useActivateUser"; // Update the import path to your hook
-import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
 
 interface RouteParams {
   uid: string;

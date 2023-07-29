@@ -92,7 +92,7 @@ const LoginPage = () => {
                   Password
                   <ChakraLink
                     as={ReachLink}
-                    to="/reset-password"
+                    to="/request/reset/password"
                     color="blue.200"
                     ml={2}
                   >
