@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
-
+import { Post as Content } from "../entities/post";
 
 
 export interface Post {
-  id: number;
-  title: string;
-  body: string;
+  post: Content;
 }
 
 const usePostDetail = (id: string) => useQuery<Post, Error>({

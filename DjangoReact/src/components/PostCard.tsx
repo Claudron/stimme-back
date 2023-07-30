@@ -1,4 +1,4 @@
-import { Post } from "../hooks/usePosts";
+import { Post } from "../entities/post";
 import { Card, CardBody, Heading, Image } from "@chakra-ui/react";
 import noImage from "../assets/no-image-placeholder-6f3882e0.webp";
 import { Link } from "react-router-dom";
