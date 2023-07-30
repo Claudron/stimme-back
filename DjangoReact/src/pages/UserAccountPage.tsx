@@ -1,3 +1,4 @@
+import { Box, Container, Flex } from "@chakra-ui/react";
 import ChangeEmail from "../components/ChangeEmail";
 import ChangePassword from "../components/ChangePassword";
 import UserData from "../components/UserData";
@@ -5,9 +6,15 @@ import UserData from "../components/UserData";
 const UserAccountPage = () => {
   return (
     <>
-      <UserData />
-      <ChangePassword />
-      <ChangeEmail />
+      <Container height="80vh" justifyContent="center" alignItems="center">
+        <Flex>
+          <Box width="860px">
+            <UserData />
+            <ChangePassword />
+            <ChangeEmail />
+          </Box>
+        </Flex>
+      </Container>
     </>
   );
 };

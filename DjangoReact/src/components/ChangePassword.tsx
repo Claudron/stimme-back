@@ -51,11 +51,11 @@ const ChangePassword = () => {
       boxShadow="lg"
       marginBottom={5}
     >
-      <Heading marginBottom={5}>Change Password</Heading>
+      <Heading as='h3' size='lg' marginBottom={5}>Change Password</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>
-            Current password:
+            Current Password:
             <Input
               ref={currentPasswordRef}
               type="password"
@@ -64,7 +64,7 @@ const ChangePassword = () => {
             />
           </FormLabel>
           <FormLabel>
-            New password:
+            New Password:
             <Input
               ref={newPasswordRef}
               type="password"
@@ -72,7 +72,7 @@ const ChangePassword = () => {
               required
             />
           </FormLabel>
-          <Button type="submit">Change password</Button>
+          <Button type="submit">Change Password</Button>
         </FormControl>
       </form>
       {changePasswordMutation.isLoading && <div>Changing password...</div>}

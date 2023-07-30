@@ -21,7 +21,7 @@ const UserData = () => {
         boxShadow="lg"
         marginBottom={5}
       >
-        <Heading marginBottom={5}>Your Account</Heading>
+        <Heading  marginBottom={5}>Your Account</Heading>
         <VStack align="start">
           <Text fontSize="xl">Email: {data.email}</Text>
           <Text fontSize="xl">First Name: {data.first_name}</Text>

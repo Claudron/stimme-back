@@ -47,14 +47,14 @@ const ChangeEmail = () => {
       boxShadow="lg"
       marginBottom={5}
     >
-      <Heading marginBottom={5}>Change Email</Heading>
+      <Heading as='h3' size='lg' marginBottom={5}>Change Email</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>
             New Email:
             <Input ref={emailRef} type="email" name="newEmail" required />
           </FormLabel>
-          <Button type="submit">Change email</Button>
+          <Button type="submit">Change Email</Button>
         </FormControl>
       </form>
       {changeEmailMutation.isLoading && <div>Changing email...</div>}
