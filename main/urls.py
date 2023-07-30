@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api_test.views import TokenCreateView, RefreshTokenView, LogoutView, AuthStatusView, test_email
+from core.views import TokenCreateView, RefreshTokenView, LogoutView, AuthStatusView, test_email
 
 
 urlpatterns = [
@@ -27,6 +27,6 @@ urlpatterns = [
     path('auth/logout', LogoutView.as_view(), name='logout'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-    path('api/', include('api_test.urls')),
+    path('api/', include('core.urls')),
     path('user/test_email/', test_email, name='test_email'),
 ]

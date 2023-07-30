@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'django_seed',
-    'api_test',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'api_test.middleware.DebugPrintMiddleware',
+    'core.middleware.DebugPrintMiddleware',
 
 ]
 
@@ -135,7 +135,7 @@ AUTH_USER_MODEL = 'custom_user.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'api_test.cookieAuth.CookieJWTAuthentication',
+        'core.cookieAuth.CookieJWTAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ),
@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    "USER_AUTHENTICATION_RULE": "api_test.custom_authentication.custom_user_authentication_rule",
+    "USER_AUTHENTICATION_RULE": "core.custom_authentication.custom_user_authentication_rule",
     'AUTH_HEADER_TYPES': ('JWT',),
     # "ACCESS_TOKEN_LIFETIME": timedelta(seconds=30),
 }
@@ -154,13 +154,13 @@ DJOSER = {
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
-        'user_create': 'api_test.serializers.UserCreateSerializer',
-        'current_user': 'api_test.serializers.UserSerializer',
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer',
 
     },
     'EMAIL': {
-        'activation': 'api_test.views.CustomActivationEmail',
-        'password_reset': 'api_test.views.CustomPasswordResetEmail',
+        'activation': 'core.views.CustomActivationEmail',
+        'password_reset': 'core.views.CustomPasswordResetEmail',
     },
 }
 

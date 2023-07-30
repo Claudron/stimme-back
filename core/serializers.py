@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from django.contrib.auth.models import update_last_login
-from api_test.models import Content
+from core.models import Content
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 from djoser.serializers import UserSerializer as BaseUserSerializer
