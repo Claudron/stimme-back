@@ -17,6 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from core.views import TokenCreateView, RefreshTokenView, LogoutView, AuthStatusView, test_email
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
 
 
 
@@ -30,4 +35,8 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
     path('api/', include('content.urls')),    
     path('user/test_email/', test_email, name='test_email'),
-]
+] 
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
