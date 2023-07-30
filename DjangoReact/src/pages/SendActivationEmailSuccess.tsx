@@ -1,5 +1,4 @@
-import { AbsoluteCenter, Center, Heading, SimpleGrid } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
+import { AbsoluteCenter, Heading, SimpleGrid } from "@chakra-ui/react";
 
 const SendActivationEmailSuccess = () => {
   return (

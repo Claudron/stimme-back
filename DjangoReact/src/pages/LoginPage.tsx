@@ -1,6 +1,12 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
   Button,
+  Link as ChakraLink,
+  Container,
   Flex,
   FormControl,
   FormLabel,
@@ -8,18 +14,11 @@ import {
   Input,
   SimpleGrid,
   Text,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Container,
 } from "@chakra-ui/react";
-import { Link as ChakraLink } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Link as ReachLink } from "react-router-dom";
-import apiClient from "../services/api-client";
+import { Link as ReachLink, useNavigate } from "react-router-dom";
 import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
+import apiClient from "../services/api-client";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
