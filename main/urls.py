@@ -19,6 +19,7 @@ from django.urls import path, include
 from core.views import TokenCreateView, RefreshTokenView, LogoutView, AuthStatusView, test_email
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/jwt/create/', TokenCreateView.as_view(), name='token_create'),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('auth/status/', AuthStatusView.as_view()),
     path('auth/logout', LogoutView.as_view(), name='logout'),
     path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),    
+    path('auth/', include('djoser.urls.jwt')),
+    path('api/', include('content.urls')),    
     path('user/test_email/', test_email, name='test_email'),
 ]
