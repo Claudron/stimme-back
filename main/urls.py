@@ -26,7 +26,6 @@ urlpatterns = [
     path('auth/status/', AuthStatusView.as_view()),
     path('auth/logout', LogoutView.as_view(), name='logout'),
     path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
-    path('api/', include('core.urls')),
+    path('auth/', include('djoser.urls.jwt')),    
     path('user/test_email/', test_email, name='test_email'),
 ]
