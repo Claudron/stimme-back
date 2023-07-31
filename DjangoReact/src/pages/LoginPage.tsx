@@ -40,7 +40,7 @@ const LoginPage = () => {
     console.log("Form data being sent:", formData);
 
     try {
-      const response = await apiClient.post("/auth/jwt/create/", formData);
+      await apiClient.post("/auth/jwt/create/", formData);
       if (emailRef.current) emailRef.current.value = "";
       if (passwordRef.current) passwordRef.current.value = "";
       navigate("/posts");

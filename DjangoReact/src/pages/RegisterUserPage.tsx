@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import {
   Alert,
   AlertDescription,
@@ -15,36 +16,35 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
 import { Link as ReachLink } from "react-router-dom";
 import useCreateUser from "../hooks/useCreateUser";
 
 const RegisterUserPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    first_name: "",
-    last_name: "",
-  });
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
 
-  const [error, setError] = useState<string | null>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
+  const [error, setError] = React.useState<string | null>(null);
 
   const createUserMutation = useCreateUser();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const email = emailRef.current ? emailRef.current.value : "";
+    const password = passwordRef.current ? passwordRef.current.value : "";
+    const confirmPassword = confirmPasswordRef.current ? confirmPasswordRef.current.value : "";
+    const first_name = firstNameRef.current ? firstNameRef.current.value : "";
+    const last_name = lastNameRef.current ? lastNameRef.current.value : "";
+
+    const formData = { email, password, confirmPassword, first_name, last_name };
+
     console.log(formData);
 
     // Check if password and confirmPassword match
-    if (formData.password !== formData.confirmPassword) {
+    if (password !== confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
@@ -52,13 +52,11 @@ const RegisterUserPage = () => {
     createUserMutation.mutate(formData, {
       // Reset form field when mutation is successful
       onSuccess: () => {
-        setFormData({
-          email: "",
-          password: "",
-          confirmPassword: "",
-          first_name: "",
-          last_name: "",
-        });
+        if (emailRef.current) emailRef.current.value = "";
+        if (passwordRef.current) passwordRef.current.value = "";
+        if (confirmPasswordRef.current) confirmPasswordRef.current.value = "";
+        if (firstNameRef.current) firstNameRef.current.value = "";
+        if (lastNameRef.current) lastNameRef.current.value = "";
         setError(null);
       },
     });
@@ -78,48 +76,23 @@ const RegisterUserPage = () => {
             <form onSubmit={handleSubmit}>
               <FormControl>
                 <FormLabel>Email address</FormLabel>
-                <Input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                <Input ref={emailRef} type="email" name="email" />
               </FormControl>
               <FormControl>
                 <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                <Input ref={passwordRef} type="password" name="password" />
               </FormControl>
               <FormControl>
                 <FormLabel>Confirm Password</FormLabel>
-                <Input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
+                <Input ref={confirmPasswordRef} type="password" name="confirmPassword" />
               </FormControl>
               <FormControl>
                 <FormLabel>First Name</FormLabel>
-                <Input
-                  type="text"
-                  name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                />
+                <Input ref={firstNameRef} type="text" name="first_name" />
               </FormControl>
               <FormControl>
                 <FormLabel>Last Name</FormLabel>
-                <Input
-                  type="text"
-                  name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                />
+                <Input ref={lastNameRef} type="text" name="last_name" />
               </FormControl>
               <Button type="submit" marginTop={5}>
                 Register
