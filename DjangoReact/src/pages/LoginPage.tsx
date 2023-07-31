@@ -1,3 +1,4 @@
+import React, { useRef, useState } from "react";
 import {
   Alert,
   AlertDescription,
@@ -15,30 +16,33 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
 import { Link as ReachLink, useNavigate } from "react-router-dom";
 import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
 import apiClient from "../services/api-client";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [isUserInactive, setIsUserInactive] = useState(false);
 
   const navigate = useNavigate();
   const resendActivationEmail = useResendActivationEmail();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const email = emailRef.current ? emailRef.current.value : "";
+    const password = passwordRef.current ? passwordRef.current.value : "";
+    const formData = { email, password };
+
+    // Log the form data to the console
+    console.log("Form data being sent:", formData);
+
     try {
       const response = await apiClient.post("/auth/jwt/create/", formData);
-      console.log(response.data);
-      setFormData({ email: "", password: "" });
+      if (emailRef.current) emailRef.current.value = "";
+      if (passwordRef.current) passwordRef.current.value = "";
       navigate("/posts");
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.detail) {
@@ -64,6 +68,17 @@ const LoginPage = () => {
     }
   };
 
+  const handleResendActivationEmail = () => {
+    if (emailRef.current) {
+      const email = emailRef.current.value;
+      if (email) {
+        resendActivationEmail.mutate({ email });
+      } else {
+        setError("Please enter an email address to resend the activation email.");
+      }
+    }
+  };
+
   return (
     <Container justifyContent="center" alignItems="center">
       <Flex>
@@ -79,12 +94,7 @@ const LoginPage = () => {
             <form onSubmit={handleSubmit}>
               <FormControl>
                 <FormLabel>Email address</FormLabel>
-                <Input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                <Input ref={emailRef} type="email" name="email" />
               </FormControl>
               <FormControl>
                 <FormLabel>
@@ -98,12 +108,7 @@ const LoginPage = () => {
                     Forgot password?
                   </ChakraLink>
                 </FormLabel>
-                <Input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                <Input ref={passwordRef} type="password" name="password" />
               </FormControl>
               <Button type="submit" marginTop={5}>
                 Login
@@ -124,14 +129,9 @@ const LoginPage = () => {
               {isUserInactive && (
                 <>
                   <Text marginTop={5}>
-                    Resend activation email for: {formData.email} ?
+                    Resend activation email for: {emailRef.current ? emailRef.current.value : ""} ?
                   </Text>
-                  <Button
-                    onClick={() =>
-                      resendActivationEmail.mutate({ email: formData.email })
-                    }
-                    marginTop={5}
-                  >
+                  <Button onClick={handleResendActivationEmail} marginTop={5}>
                     Resend
                   </Button>
                 </>
