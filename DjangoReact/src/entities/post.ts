@@ -5,5 +5,6 @@ export interface Post {
     date_created: string; 
     date_update: string; 
     thumbnail?: string; 
-    content_image?: string; 
+    content_image?: string;
+    embed_video_url: string; 
   }

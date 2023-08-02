@@ -6,4 +6,4 @@ class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = ['id', 'title', 'body', 'date_created',
-                  'date_update', 'thumbnail', 'content_image']
+                  'date_update', 'thumbnail', 'content_image', 'embed_video_url']

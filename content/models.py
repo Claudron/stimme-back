@@ -8,7 +8,7 @@ class Content(models.Model):
     date_update = models.DateTimeField(auto_now=True)
     thumbnail = models.ImageField(upload_to='content_thumbnails/', blank=True, null=True)
     content_image = models.ImageField(upload_to='content_images/', blank=True, null=True)
-    vimeo_video_url = models.URLField(max_length=200, blank=True, null=True)
+    embed_video_url = models.URLField(max_length=200, blank=True, null=True)
 
 
     def __str__(self) -> str:
