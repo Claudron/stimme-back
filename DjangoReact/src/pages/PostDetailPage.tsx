@@ -52,16 +52,21 @@ const PostDetailPage = () => {
       </GridItem>
       {embedContent && (
         <GridItem>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <iframe
             src={embedContent.embedUrl}
-            width="640"
-            height="360"
-            frameBorder="0"
-            allow="autoplay; fullscreen"
+            width="800" // Increased width
+            height="450" // Increased height
+            allow= "fullscreen"
             allowFullScreen
             title={`${embedContent.type} Video`}
           ></iframe>
-        </GridItem>
+        </Box>
+      </GridItem>
       )}
       <Box mt={4}>
         <Image src={post?.content_image || noImage} alt="Content Image" />
