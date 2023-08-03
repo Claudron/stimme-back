@@ -1,5 +1,5 @@
 import { Post } from "../entities/post";
-import { Card, CardBody, Heading, Image } from "@chakra-ui/react";
+import { Card, CardBody, Heading, Image, Text } from "@chakra-ui/react";
 import noImage from "../assets/no-image-placeholder-6f3882e0.webp";
 import { Link } from "react-router-dom";
 
@@ -16,6 +16,9 @@ const PostCard = ({ post }: Props) => {
           <Link to={"/posts/" + post.id}>{post.title}</Link>
         </Heading>
       </CardBody>
+        <Text padding={3} align="right" fontSize="sm" color="gray.600">
+        {post?.date_created && new Date(post.date_created).toISOString().split('T')[0].replace(/-/g, '.')}
+        </Text>
     </Card>
   );
 };
