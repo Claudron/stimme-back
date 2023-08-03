@@ -7,81 +7,35 @@ import {
   Text,
   Image,
   Box,
+  HStack,
 } from "@chakra-ui/react";
 import noImage from "../assets/no-image-placeholder-6f3882e0.webp";
+import EmbedVideo from "../components/EmbedVideo";
 
 
 const PostDetailPage = () => {
   const { id } = useParams();
   const { data: post, error } = usePostDetail(id!);
 
-
-  const getEmbedContent = (url: string) => {
-    if (url) {
-      const parsedUrl = new URL(url);
-      const hostname = parsedUrl.hostname;
-  
-      if (hostname.includes("youtube.com")) {
-        const youtubeId = parsedUrl.searchParams.get("v");
-        return {
-          type: 'youtube',
-          embedUrl: `https://www.youtube.com/embed/${youtubeId}`
-        };
-      } else if (hostname.includes("vimeo.com")) {
-        const vimeoId = parsedUrl.pathname.split('/').pop();
-        return {
-          type: 'vimeo',
-          embedUrl: `https://player.vimeo.com/video/${vimeoId}`
-        };
-      }
-    }
-    return null;
-  };
-
-
-  const embedContent = post?.embed_video_url ? getEmbedContent(post.embed_video_url) : null;
-
-
-
   if (error || !id) throw error;
 
   return (
     <SimpleGrid columns={1} spacing={10}>
-      <GridItem>
-        <Heading>{post?.title}</Heading>
-      </GridItem>
-      {embedContent && (
-        <GridItem>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <iframe
-            src={embedContent.embedUrl}
-            width="800" // Increased width
-            height="450" // Increased height
-            allow= "fullscreen"
-            allowFullScreen
-            title={`${embedContent.type} Video`}
-          ></iframe>
-        </Box>
-      </GridItem>
-      )}
-      <Box mt={4}>
-        <Image src={post?.content_image || noImage} alt="Content Image" />
-      </Box>
-      <GridItem>
-        <Text fontSize={25}>{post?.body}</Text>
-      </GridItem>
-      <GridItem>
+      <EmbedVideo  embedUrl={post?.embed_video_url}/>
+            <GridItem>
+              <Heading>{post?.title}</Heading>
+            </GridItem>
         <Text fontSize="sm" color="gray.600">
           Created: {post?.date_created}
         </Text>
-        <Text fontSize="sm" color="gray.600">
-          Updated: {post?.date_update}
-        </Text>
+            <HStack>
+      <GridItem>
+        <Text fontSize={25}>{post?.body}</Text>
       </GridItem>
+      <Box mt={4}>
+        <Image src={post?.content_image || noImage} alt="Content Image" />
+      </Box>
+      </HStack>
     </SimpleGrid>
   );
 };
