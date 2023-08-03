@@ -8,10 +8,10 @@ import {
   Image,
   Box,
   HStack,
+  Container,
 } from "@chakra-ui/react";
 import noImage from "../assets/no-image-placeholder-6f3882e0.webp";
 import EmbedVideo from "../components/EmbedVideo";
-
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -20,23 +20,29 @@ const PostDetailPage = () => {
   if (error || !id) throw error;
 
   return (
-    <SimpleGrid columns={1} spacing={10}>
-      <EmbedVideo  embedUrl={post?.embed_video_url}/>
-            <GridItem>
-              <Heading>{post?.title}</Heading>
-            </GridItem>
-        <Text fontSize="sm" color="gray.600">
-          Created: {post?.date_created}
-        </Text>
-            <HStack>
-      <GridItem>
-        <Text fontSize={25}>{post?.body}</Text>
-      </GridItem>
-      <Box mt={4}>
-        <Image src={post?.content_image || noImage} alt="Content Image" />
+    <Container maxW="860">
+      <Box marginBottom={5}>
+        <EmbedVideo embedUrl={post?.embed_video_url} />
       </Box>
-      </HStack>
-    </SimpleGrid>
+      <Heading>{post?.title}</Heading>
+      <SimpleGrid columns={1}>
+        <Text fontSize="sm" color="gray.600">
+          {post?.date_created &&
+            new Date(post.date_created)
+              .toISOString()
+              .split("T")[0]
+              .replace(/-/g, ".")}
+        </Text>
+        <HStack>
+          <GridItem>
+            <Text fontSize={25}>{post?.body}</Text>
+          </GridItem>
+        </HStack>
+          <Box mt={4}>
+            <Image src={post?.content_image || noImage} alt="Content Image" />
+          </Box>
+      </SimpleGrid>
+    </Container>
   );
 };
 

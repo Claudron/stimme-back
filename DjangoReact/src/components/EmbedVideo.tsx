@@ -35,8 +35,8 @@ const EmbedVideo = ({ embedUrl }: Props) => {
         <Box display="flex" justifyContent="center" alignItems="center">
           <iframe
             src={embedContent.embedUrl}
-            width="800" // Increased width
-            height="450" // Increased height
+            width="800" 
+            height="450" 
             allow="fullscreen"
             allowFullScreen
             title={`${embedContent.type} Video`}
