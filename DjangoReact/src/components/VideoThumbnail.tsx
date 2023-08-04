@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface Props {
-    videoId: number;
+  embedUrl: string;
 }
 
+const VideoThumbnail = ({ embedUrl }: Props) => {
+  
+  const getId = (url: string) => {
+    const match = url.match(/vimeo\.com\/(\d+)/);
+  return match ? match[1] : null;  
+  } 
+ 
+  const videoId = getId(embedUrl);
 
-
-const VideoThumbnail = ({ videoId }: Props) => {
   const [thumbnailUrl, setThumbnailUrl] = useState(null);
 
   useEffect(() => {
@@ -22,7 +28,7 @@ const VideoThumbnail = ({ videoId }: Props) => {
       {thumbnailUrl ? (
         <img src={thumbnailUrl} alt="Video Thumbnail" />
       ) : (
-        'Loading thumbnail...'
+        "Loading thumbnail..."
       )}
     </div>
   );

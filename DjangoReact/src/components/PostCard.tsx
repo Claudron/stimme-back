@@ -16,9 +16,13 @@ const PostCard = ({ post }: Props) => {
           <Link to={"/posts/" + post.id}>{post.title}</Link>
         </Heading>
       </CardBody>
-        <Text padding={3} align="right" fontSize="sm" color="gray.600">
-        {post?.date_created && new Date(post.date_created).toISOString().split('T')[0].replace(/-/g, '.')}
-        </Text>
+      <Text padding={3} align="right" fontSize="sm" color="gray.600">
+        {post?.date_created &&
+          new Date(post.date_created)
+            .toISOString()
+            .split("T")[0]
+            .replace(/-/g, ".")}
+      </Text>
     </Card>
   );
 };

@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import noImage from "../assets/no-image-placeholder-6f3882e0.webp";
 import EmbedVideo from "../components/EmbedVideo";
+import VideoThumbnail from "../components/VideoThumbnail";
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -33,6 +34,7 @@ const PostDetailPage = () => {
               .split("T")[0]
               .replace(/-/g, ".")}
         </Text>
+        <VideoThumbnail embedUrl={post?.embed_video_url || ''}/>
         <HStack>
           <GridItem>
             <Text fontSize={25}>{post?.body}</Text>
