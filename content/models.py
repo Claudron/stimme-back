@@ -7,7 +7,6 @@ class Content(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
     date_update = models.DateTimeField(auto_now=True)
     thumbnail = models.ImageField(upload_to='content_thumbnails/', blank=True, null=True)
-    content_image = models.ImageField(upload_to='content_images/', blank=True, null=True)
     embed_video_url = models.URLField(max_length=200, blank=True, null=True)
 
 
@@ -18,4 +17,13 @@ class Content(models.Model):
         ordering = ['title']
 
 
+class ContentImage(models.Model):
+    content = models.ForeignKey(Content, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='content_images/', blank=True, null=True)
 
+    def __str__(self) -> str:
+        return f'{self.content.title} - {self.image.name}'
+
+    def delete(self, *args, **kwargs):
+        self.image.delete(save=False) 
+        super().delete(*args, **kwargs) 
