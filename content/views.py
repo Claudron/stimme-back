@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import Content
 from .serializers import ContentSerializer
 
+
 class ContentList(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -21,3 +22,6 @@ class ContentDetail(APIView):
         content = Content.objects.get(pk=id)
         serializer = ContentSerializer(content)
         return Response(serializer.data)
+
+
+

@@ -8,6 +8,7 @@ const usePostDetail = (id: string) => useQuery<Post, Error>({
     apiClient
       .get<Post>(`/api/content/${id}`)
       .then(res => res.data),
+      
 });
 
 export default usePostDetail;

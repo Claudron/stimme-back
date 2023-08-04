@@ -38,9 +38,16 @@ const PostDetailPage = () => {
             <Text fontSize={25}>{post?.body}</Text>
           </GridItem>
         </HStack>
-        <Box mt={4}>
-          <Image src={post?.content_image || noImage} alt="Content Image" />
-        </Box>
+       
+        <SimpleGrid>
+          {post?.content_image && post.content_image.length > 0 ? (
+            post.content_image.map((file, index) => {
+              return <Image key={index} src={file.image} alt="Content Image" />;
+            })
+          ) : (
+            <Image src={noImage} alt="No Content Image" />
+          )}
+        </SimpleGrid>
       </SimpleGrid>
     </Container>
   );
