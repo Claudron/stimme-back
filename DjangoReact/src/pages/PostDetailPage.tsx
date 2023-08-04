@@ -39,7 +39,7 @@ const PostDetailPage = () => {
           </GridItem>
         </HStack>
        
-        <SimpleGrid>
+        <SimpleGrid marginTop={5} columns={{ base: 1, md: 2 }} spacing={2}>
           {post?.content_image && post.content_image.length > 0 ? (
             post.content_image.map((file, index) => {
               return <Image key={index} src={file.image} alt="Content Image" />;
