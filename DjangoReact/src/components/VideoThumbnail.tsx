@@ -1,4 +1,4 @@
-import { Spinner } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -29,7 +29,9 @@ const VideoThumbnail = ({ embedUrl }: Props) => {
       {thumbnailUrl ? (
         <img src={thumbnailUrl} alt="Video Thumbnail" />
       ) : (
-        <Spinner/>
+        <Center>
+          <Spinner/>
+        </Center>
       )}
     </div>
   );
