@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_seed',
     'core',
     'content',
+    'content_custom',
     'tags',
 ]
 
