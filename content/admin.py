@@ -1,7 +1,13 @@
 from django.contrib import admin
+from django.contrib.contenttypes.admin import GenericTabularInline
 from .models import ContentImage, Category
+from tags.models import TaggedItem
 from . import models
 
+
+class TagInline(GenericTabularInline):
+    autocomplete_fields = ['tag']
+    model = TaggedItem
 
 class ContentImageInline(admin.TabularInline):
     model = ContentImage
@@ -9,7 +15,7 @@ class ContentImageInline(admin.TabularInline):
 
 
 class ContentAdmin(admin.ModelAdmin):
-    inlines = [ContentImageInline]
+    inlines = [TagInline, ContentImageInline]
     list_display = ('id', 'title', 'date_created', 'display_categories')
     ordering = ('title', 'id', 'date_created')
     search_fields = ('title',)
