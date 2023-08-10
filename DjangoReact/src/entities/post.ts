@@ -2,6 +2,14 @@ interface ContentImage {
   image: string;
 }
 
+interface Category {
+  name: string;
+}
+
+interface Tag {
+  label: string;
+}
+
 export interface Post {
     id: number;
     title: string;
@@ -10,5 +18,7 @@ export interface Post {
     date_update: string; 
     thumbnail?: string; 
     content_image?: ContentImage[];
-    embed_video_url: string; 
-  }
+    embed_video_url: string;
+    category: Category[];   
+    tags: Tag[];            
+}

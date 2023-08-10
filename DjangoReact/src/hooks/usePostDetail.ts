@@ -7,7 +7,10 @@ const usePostDetail = (id: string) => useQuery<Post, Error>({
   queryFn: () => 
     apiClient
       .get<Post>(`/api/content/${id}`)
-      .then(res => res.data),
+      .then(res => {
+        console.log(res.data); // log the response to the console
+        return res.data;
+      }),     
       
 });
 
