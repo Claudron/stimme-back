@@ -46,19 +46,25 @@ class TokenCreateView(DjoserTokenCreateView):
 
 class RefreshTokenView(SimpleJWTTokenRefreshView):
     def post(self, request, *args, **kwargs):
-        refresh_token = request.COOKIES.get('refresh_token')
-        token = RefreshToken(refresh_token)
-        response = Response({
-            'access': str(token.access_token),
-            'refresh': str(token),
-        })
-        response.set_cookie("access_token", str(
-            token.access_token), httponly=True)
-        response.set_cookie("refresh_token", str(token), httponly=True)
-        return response
+        try:
+            refresh_token = request.COOKIES.get('refresh_token')
+            token = RefreshToken(refresh_token)
+            
+            response = Response({
+                'access': str(token.access_token),
+                'refresh': str(token),
+            })
+            response.set_cookie("access_token", str(token.access_token), httponly=True)
+            response.set_cookie("refresh_token", str(token), httponly=True)
+            return response
+        
+        except (InvalidToken, TokenError) as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
+    authentication_classes = []  
+
     def post(self, request):
         try:
             response = Response(

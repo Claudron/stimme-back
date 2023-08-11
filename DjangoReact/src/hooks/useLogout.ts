@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const useLogout = () => {
-  const logout = async () => {
+export const performLogout = async () => {
     try {
       const response = await axios.post('/auth/logout', { withCredentials: true });
 
@@ -11,9 +10,11 @@ const useLogout = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+};
 
-  return logout;
+const useLogout = () => {
+  return performLogout;
 };
 
 export default useLogout;
+

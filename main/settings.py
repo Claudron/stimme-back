@@ -159,6 +159,7 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
+    
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',

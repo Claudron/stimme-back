@@ -1,6 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import useLogout from './useLogout';
 
 const useRefreshToken = () => {
+  const logout = useLogout();
+
   const refreshTokens = async () => {
     try {
       const response = await axios.get('/auth/jwt/refresh', { withCredentials: true });
@@ -9,6 +12,9 @@ const useRefreshToken = () => {
         return response.data.access;
       }
     } catch (error) {
+      if (error instanceof AxiosError && error.response && error.response.status === 400) {
+        logout();
+      }
       console.error(error);
     }
   };
@@ -17,3 +23,7 @@ const useRefreshToken = () => {
 };
 
 export default useRefreshToken;
+
+
+
+

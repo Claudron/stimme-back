@@ -1,4 +1,5 @@
 import axios from "axios";
+import { performLogout } from "../hooks/useLogout";
 
 const BASE_URL = '';
 
@@ -14,35 +15,33 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // // Check if the request was for the registration endpoint
-    // if (originalRequest.url === '/user/register/') {
-    //   return Promise.reject(error);
-    // }
     // Check if the request was for the resend_activation endpoint
     if (originalRequest.url === '/auth/users/resend_activation/') {
       return Promise.reject(error);
     }
 
-
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      return axios
-        .post('/auth/jwt/refresh/', {}, { withCredentials: true })
-        .then((res) => {
-          if (res.status === 200) {
-            return apiClient(originalRequest);
-          } else {
-            // If token refresh fails, redirect the user to the login page, or handle appropriately
-          }
-        });
+      try {
+        const res = await axios.post('/auth/jwt/refresh/', {}, { withCredentials: true });
+
+        if (res.status === 200) {
+          return apiClient(originalRequest);
+        } 
+      } catch (refreshError) {
+        if (axios.isAxiosError(refreshError) && refreshError.response && refreshError.response.status === 400) {
+        
+          await performLogout();
+          window.location.href = '/login'; 
+          
+        }
+      }
+      
     }
-    
-    // If the error was due to other reasons, just throw it back to the caller
+
     return Promise.reject(error);
   }
 );
 
 export default apiClient;
-
-
