@@ -11,8 +11,25 @@ class ContentList(APIView):
 
     def get(self, request):
         queryset = Content.objects.all()
+
+        # Filter by category
+        category_id = request.query_params.get('categories', None)
+        if category_id:
+            queryset = queryset.filter(category__id=category_id)
+
+        # Filter by search
+        search_text = request.query_params.get('search', None)
+        if search_text:
+            queryset = queryset.filter(title__icontains=search_text)
+
+        # Order by a specific field
+        order = request.query_params.get('ordering', None)
+        if order:
+            queryset = queryset.order_by(order)
+
         serializer = ContentSerializer(queryset, many=True)
         return Response(serializer.data)
+
 
 
 class ContentDetail(APIView):
