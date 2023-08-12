@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Content, Category
@@ -26,6 +27,13 @@ class ContentList(APIView):
         order = request.query_params.get('ordering', None)
         if order:
             queryset = queryset.order_by(order)
+
+        paginator = PageNumberPagination()
+        paginated_queryset = paginator.paginate_queryset(queryset, request)
+        
+        if paginated_queryset is not None:
+            serializer = ContentSerializer(paginated_queryset, many=True)
+            return paginator.get_paginated_response(serializer.data)
 
         serializer = ContentSerializer(queryset, many=True)
         return Response(serializer.data)

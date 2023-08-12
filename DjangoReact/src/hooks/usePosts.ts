@@ -1,31 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/api-client";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Post } from "../entities/post";
+import apiClient from "../services/api-client";
 import usePostQueryStore from "../store/PostStore";
+
+// Using the provided FetchResponse interface
+interface FetchResponse<T>{
+  count: number;
+  next: string | null;
+  results: T[];
+}
 
 const usePosts = () => {
   const postQuery = usePostQueryStore(s => s.PostQuery);
 
-  return useQuery<Post[], Error>({
+  const queryInfo = useInfiniteQuery<FetchResponse<Post>, Error>({
     queryKey: ['posts', postQuery],
-    queryFn: () => {
-      const params = {
-        categories: postQuery.categoryId,
-        ordering: postQuery.sortOrder,
-        search: postQuery.searchText,
-      };
-
-      return apiClient
-        .get<Post[]>('/api/content', { params })
+    queryFn: ({ pageParam = 1 }) => 
+      apiClient
+        .get<FetchResponse<Post>>('/api/content/', {
+          params: {
+            categories: postQuery.categoryId,
+            ordering: postQuery.sortOrder,
+            search: postQuery.searchText,
+            page: pageParam
+          }
+        })
         .then(res => {
-          console.log(res.data);
+          console.log("Fetched Data:", res.data);  // Logging the fetched data
           return res.data;
-        });
-    },     
+        }),
+    getNextPageParam: (lastPage) => {
+      const nextPageUrl = lastPage.next;
+      if (nextPageUrl) {
+        const url = new URL(nextPageUrl);
+        return parseInt(url.searchParams.get("page") || '');
+      }
+      return undefined;
+    }
   });
-};
+
+  return queryInfo;
+}
 
 export default usePosts;
-
-
-

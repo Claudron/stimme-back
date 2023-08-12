@@ -1,6 +1,8 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import usePosts from "../hooks/usePosts";
 import PostCard from "./PostCard";
+import React from "react";
+import PostCardContainer from "./PostCardContainer";
 
 const PostGrid = () => {
   const { data, error } = usePosts();
@@ -13,9 +15,16 @@ const PostGrid = () => {
         padding="10px"
         spacing={6}
       >
-        {data?.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {data?.pages.map((page, index) => 
+        <React.Fragment key={index}>
+        {page.results.map((post)=> 
+        
+         <PostCardContainer >
+           <PostCard key={post.id} post={post} />
+         </PostCardContainer>
+        )}
+        </React.Fragment>
+        )}
       </SimpleGrid>
     </>
   );
