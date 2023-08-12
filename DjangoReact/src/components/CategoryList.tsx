@@ -9,6 +9,20 @@ const CategoryList = () => {
 
   return (
     <List>
+      <ListItem>
+        <Button
+          whiteSpace={"normal"}
+          textAlign="left"
+          fontSize="lg"
+          variant="link"
+          fontWeight={selectedCategoryId === null ? "bold" : "normal"}
+          onClick={() => {
+            setSelectedCategoryId(null); 
+          }}
+        >
+          All
+        </Button>
+      </ListItem>
       {data?.map((category) => (
         <ListItem key={category.id}>
           <Button
