@@ -1,7 +1,7 @@
 import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
+import CategoryList from "../components/CategoryList";
 import PostGrid from "../components/PostGrid";
 import SearchInput from "../components/SearchInput";
-import CategoryList from "../components/CategoryList";
 
 const Posts = () => {
   return (
@@ -16,7 +16,7 @@ const Posts = () => {
       }}
     >
       <GridItem area="aside">
-        <Heading as='h3' size='lg' marginBottom={3}>
+        <Heading as="h3" size="lg" marginBottom={3}>
           Categories
         </Heading>
         <CategoryList />
