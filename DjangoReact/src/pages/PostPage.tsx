@@ -21,7 +21,8 @@ const Posts = () => {
         </Heading>
         <CategoryList />
       </GridItem>
-      <GridItem area="main">
+      <GridItem
+        area="main">
         <Box marginBottom={5}>
           <SearchInput />
         </Box>

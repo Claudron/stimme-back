@@ -17,10 +17,7 @@ const PostGrid = () => {
   const fetchedGamesCount =
     data?.pages.reduce((total, page) => total + page.results.length, 0) || 0;
   return (
-    //  Using Flex to create a container with column direction
-    <Flex direction="column" h="100%">
-      {/* Box acts as a flexible container that grows and allows vertical scrolling */}
-      <Box flex="1" overflowY="auto">
+   
         <InfiniteScroll
           dataLength={fetchedGamesCount}
           hasMore={!!hasNextPage}
@@ -44,8 +41,7 @@ const PostGrid = () => {
             ))}
           </SimpleGrid>
         </InfiniteScroll>
-      </Box>
-    </Flex>
+  
   );
 };
 
