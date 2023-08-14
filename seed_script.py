@@ -1,5 +1,4 @@
-from tags.models import Tag, TaggedItem
-from content.models import Content, Category
+from content.models import PostContent, Category, Tag
 from django_seed import Seed
 from django.contrib.contenttypes.models import ContentType
 seeder = Seed.seeder()
@@ -23,7 +22,7 @@ for tag_label in tags_list:
 
 # Seeding the Content model and associating it with categories
 for _ in range(100):
-    content = Content.objects.create(
+    content = PostContent.objects.create(
         title=seeder.faker.sentence(),
         body=seeder.faker.text(),
         embed_video_url="https://vimeo.com/850841152?share=copy",
@@ -33,13 +32,8 @@ for _ in range(100):
         name__in=categories_list).order_by('?').first()
     content.category.add(random_category)
 
-# Associating each Content with random tags
-content_type = ContentType.objects.get_for_model(Content)
-for content in Content.objects.all():
-    number_of_tags = seeder.faker.random_int(min=1, max=len(tags_list))
-    tags = seeder.faker.random_elements(
-        elements=tags_list, unique=True, length=number_of_tags)
-    for tag_label in tags:
-        tag = Tag.objects.get(label=tag_label)
-        TaggedItem.objects.create(
-            tag=tag, content_type=content_type, object_id=content.id)
+    # Associating the content with a random category
+    random_tag = Tag.objects.filter(
+        label__in=tags_list).order_by('?').first()
+    content.tags.add(random_tag)
+

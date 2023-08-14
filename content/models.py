@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
-   
 
     def __str__(self) -> str:
         return self.name
@@ -12,15 +12,29 @@ class Category(models.Model):
         ordering = ['name']
 
 
-class Content(models.Model):
+class Tag(models.Model):
+    label = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.label
+
+
+class BaseContent(models.Model):
     title = models.CharField(max_length=100)
-    body = models.TextField()
     date_created = models.DateTimeField(default=timezone.now)
     date_update = models.DateTimeField(auto_now=True)
+    category = models.ManyToManyField(Category, blank=True)
+    tags = models.ManyToManyField(Tag)
+
+    class Meta:
+        abstract = True
+
+
+class PostContent(BaseContent):
+    body = models.TextField()
     thumbnail = models.ImageField(
         upload_to='content_thumbnails/', blank=True, null=True)
     embed_video_url = models.URLField(max_length=200, blank=True, null=True)
-    category = models.ManyToManyField(Category, blank=True)
 
     def __str__(self) -> str:
         return self.title
@@ -31,7 +45,7 @@ class Content(models.Model):
 
 class ContentImage(models.Model):
     content = models.ForeignKey(
-        Content, related_name='images', on_delete=models.CASCADE)
+        PostContent, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to='content_images/', blank=True, null=True)
 

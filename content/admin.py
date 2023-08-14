@@ -1,10 +1,6 @@
 from django.contrib import admin
-
 from .models import ContentImage, Category
-from tags.models import TaggedItem
 from . import models
-
-
 
 
 class ContentImageInline(admin.TabularInline):
@@ -30,5 +26,5 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 
-admin.site.register(models.Content, ContentAdmin,)
+admin.site.register(models.PostContent, ContentAdmin)
 admin.site.register(Category, CategoryAdmin)
