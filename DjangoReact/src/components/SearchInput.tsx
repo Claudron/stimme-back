@@ -1,32 +1,42 @@
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom';
-import {BsSearch} from 'react-icons/bs'
+import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
+import usePostQueryStore from "../store/PostStore";
 
 const SearchInput = () => {
-    const ref = useRef<HTMLInputElement>(null);
-    // const setSearchText = useGameQueryStore((s) => s.setSearchText);
-    const navigate = useNavigate();
-  
-    return (
-      <form
-        // onSubmit={(event) => {
-        //   event.preventDefault(); 
-        //   if (ref.current) setSearchText(ref.current.value);
-        //   navigate("/");
-        // }}
-      >
-        <InputGroup>
-          <InputLeftElement children={<BsSearch />} />
-          <Input
-            ref={ref}
-            borderRadius={20}
-            placeholder="search posts..."
-            variant="filled"
-          />
-        </InputGroup>
-      </form>
-    );
+  const ref = useRef<HTMLInputElement>(null);
+  const setSearchText = usePostQueryStore((s) => s.setSearchText);
+  const navigate = useNavigate();
+
+  const clearSearch = () => {
+    setSearchText(""); // Clear the search text
+    if (ref.current) ref.current.value = ""; // Clear the input field
+    navigate("/posts"); // Navigate to the posts grid
   };
 
-export default SearchInput
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (ref.current) setSearchText(ref.current.value);
+        navigate("/posts");
+      }}
+    >
+      <InputGroup>
+        <InputLeftElement children={<BsSearch />} />
+        <Input
+          ref={ref}
+          borderRadius={20}
+          placeholder="search posts..."
+          variant="filled"
+        />
+        <Button onClick={clearSearch} ml={2}>
+          Clear Search
+        </Button>
+      </InputGroup>
+    </form>
+  );
+};
+
+export default SearchInput;

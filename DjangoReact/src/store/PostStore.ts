@@ -4,20 +4,20 @@ import { create } from 'zustand';
 interface PostQuery {
     categoryId?: number | null;
     sortOrder?: string;
-    searchText?: string;
+    searchText?: string | undefined;
   }
 
 
 interface PostQueryStore {
     PostQuery: PostQuery;
-    setSearchText:(earchText: string) => void;
+    setSearchText:(searchText: string | undefined) => void;
     setCategoryId: (genreId: number | null) => void;
     setSortOrder: (sortOrder: string) => void;
 }
 
 const usePostQueryStore = create<PostQueryStore>(set => ({
     PostQuery: {
-        categoryId: null,  // Set initial value to null
+        categoryId: null, 
         sortOrder: undefined,
         searchText: undefined
     },

@@ -2,8 +2,13 @@ import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
 import CategoryList from "../components/CategoryList";
 import PostGrid from "../components/PostGrid";
 import SearchInput from "../components/SearchInput";
+import usePostQueryStore from "../store/PostStore";
 
 const Posts = () => {
+  const setSearchText = usePostQueryStore((s) => s.setSearchText);
+  setSearchText('');
+  console.log()
+
   return (
     <Grid
       templateAreas={{
