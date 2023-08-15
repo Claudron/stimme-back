@@ -1,6 +1,7 @@
+import AudioPlayer from "../components/AudioPlayer";
 
 const DashboardPage = () => {
-  return <div>DashboardPage</div>;
+  return <AudioPlayer/>
 };
 
 export default DashboardPage;

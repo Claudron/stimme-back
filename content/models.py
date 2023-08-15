@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+import os
 
 
 class Category(models.Model):
@@ -41,6 +42,22 @@ class PostContent(BaseContent):
 
     class Meta:
         ordering = ['title']
+
+
+class AudioContent(BaseContent):
+    audio_file = models.FileField(upload_to="audio")
+
+    def delete(self, *args, **kwargs):
+        if self.audio_file:
+            if os.path.isfile(self.audio_file.path):
+                os.remove(self.audio_file.path)
+        super().delete(*args, **kwargs)
+
+
+    def __str__(self) -> str:
+        return self.title
+    class Meta:
+        ordering = ['title']       
 
 
 class ContentImage(models.Model):
