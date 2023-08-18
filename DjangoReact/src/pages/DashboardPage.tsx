@@ -1,7 +1,8 @@
 import AudioPlayer from "../components/AudioPlayer";
+import ExerciseList from "../components/ExerciseList";
 
 const DashboardPage = () => {
-  return <AudioPlayer/>
+  return <ExerciseList />;
 };
 
 export default DashboardPage;

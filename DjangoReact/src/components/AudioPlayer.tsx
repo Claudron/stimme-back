@@ -13,13 +13,13 @@ import {
   List,
 } from "@chakra-ui/react";
 import useAudioList from "../hooks/useAudioList";
-import useAudioDetail from "../hooks/useAudioDetail";
+import useAudioDetail from "../hooks/useAudioDetail"; 
 
-type Audio = {
-  id: number;
-  title: string;
-  audio_file: string;
-};
+// type Audio = {
+//   id: number;
+//   title: string;
+//   audio_file: string;
+// };
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
