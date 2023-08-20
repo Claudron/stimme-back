@@ -1,25 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/api-client";
 
-interface Exercises {
+interface Exercise {
     id: number;
     name: string;
-    range: string;
-    direction: string;
-    tempo: string;
-    file: string;
-
+    methods: string;
 }
 
-const useExercises = () => useQuery<Exercises[], Error>({
-  queryKey: ['Exercises'],
+const useExerciseMethod = () => useQuery<Exercise[], Error>({
+  queryKey: ['Exercise List'],
   queryFn: () => 
     apiClient
-      .get<Exercises[]>('/practice/exercises/')
+      .get<Exercise[]>('/practice/exercises/')
       .then(res => {
         console.log(res.data); 
         return res.data;
       }),     
 });
 
-export default useExercises;
+export default useExerciseMethod;
