@@ -1,19 +1,19 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from .models import Exercise
-from .serializers import ExerciseSerializer
+from .models import ExerciseMethod
+from .serializers import ExerciseMethodSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
-class ExerciseList(APIView):
-        # permission_classes = [IsAuthenticated]
 
-        queryset = Exercise.objects.all()
-        serializer_class = ExerciseSerializer
+class ExerciseMethodList(APIView):
+    # permission_classes = [IsAuthenticated]
 
-        def get(self, request, *args, **kwargs):
-                exercises = Exercise.objects.all()
-                serializer = ExerciseSerializer(exercises, many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+    queryset = ExerciseMethod.objects.all()
+    serializer_class = ExerciseMethodSerializer
 
+    def get(self, request, *args, **kwargs):
+        exercises = ExerciseMethod.objects.all()
+        serializer = ExerciseMethodSerializer(exercises, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

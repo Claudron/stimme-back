@@ -1,14 +1,16 @@
 from rest_framework import serializers
-from .models import Exercise, ExerciseFile
+from .models import ExerciseMethod, ExerciseMethodFile
 
-class ExerciseFileSerializer(serializers.ModelSerializer):
+
+class ExerciseMethodFileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ExerciseFile
+        model = ExerciseMethodFile
         fields = '__all__'
 
-class ExerciseSerializer(serializers.ModelSerializer):
-    files = ExerciseFileSerializer(many=True, read_only=True)
+
+class ExerciseMethodSerializer(serializers.ModelSerializer):
+    files = ExerciseMethodFileSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Exercise
+        model = ExerciseMethod
         fields = ['id', 'name', 'files']
