@@ -1,5 +1,5 @@
 from django.contrib import admin, messages
-from .models import ExerciseMethod, ExerciseMethodFile
+from .models import ExerciseMethod, ExerciseMethodFile, Exercise
 from django.conf import settings
 import os
 
@@ -9,7 +9,7 @@ class ExerciseMethodFileInline(admin.TabularInline):
     extra = 0
 
 
-class ExerciseAdmin(admin.ModelAdmin):
+class ExerciseMethodAdmin(admin.ModelAdmin):
     inlines = [ExerciseMethodFileInline]
     change_form_template = 'admin/exercise_method_bulk_upload.html'
 
@@ -40,4 +40,14 @@ class ExerciseAdmin(admin.ModelAdmin):
             )
 
 
-admin.site.register(ExerciseMethod, ExerciseAdmin)
+
+class ExerciseAdmin(admin.ModelAdmin):
+    filter_horizontal = ('methods',)
+
+
+
+
+
+
+admin.site.register(ExerciseMethod, ExerciseMethodAdmin)
+admin.site.register(Exercise, ExerciseAdmin)

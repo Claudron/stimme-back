@@ -4,6 +4,9 @@ import shutil
 from django.conf import settings
 
 
+
+# Methods
+
 def exercise_method_file_path(instance, filename):
     return os.path.join('methodes', instance.exercise_method.name, filename)
 
@@ -41,3 +44,19 @@ class ExerciseMethodFile(models.Model):
 
     def __str__(self):
         return f"{self.exercise_method.name}_{self.range}_{self.direction}_{self.tempo}"
+
+
+
+#Exercises
+
+class Exercise(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    methods = models.ManyToManyField(ExerciseMethod, related_name='exercises')
+    
+    def __str__(self):
+        return self.name
+    
+
+
+
+
