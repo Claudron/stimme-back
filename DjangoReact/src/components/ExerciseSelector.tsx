@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import useExercise from '../hooks/useExercise';
-import { Files } from '../hooks/useExercise';
+import React, { useState, useEffect } from "react";
+import useExercise from "../hooks/useExercise";
+import { Files } from "../hooks/useExercise";
+import { Select, Box, Flex } from "@chakra-ui/react";
+
 
 const ExerciseSelector = () => {
   const { data: exercises } = useExercise();
@@ -11,11 +13,11 @@ const ExerciseSelector = () => {
   const [ranges, setRanges] = useState<string[]>([]);
   const [selectedRange, setSelectedRange] = useState<string | null>(null); // State to keep track of selected range
   const [directions, setDirections] = useState<string[]>([]); // State to keep track of available directions based on the selected range
-  const [selectedDirection, setSelectedDirection] = useState<string | null>(null);
+  const [selectedDirection, setSelectedDirection] = useState<string | null>(
+    null
+  );
   const [tempos, setTempos] = useState<string[]>([]); // State to keep track of available tempos based on the selected range and direction
   const [selectedTempo, setSelectedTempo] = useState<string | null>(null);
-
-
 
   useEffect(() => {
     if (selectedExercise) {
@@ -32,7 +34,9 @@ const ExerciseSelector = () => {
   useEffect(() => {
     if (selectedMethod) {
       const method = methods.find((m) => m.name === selectedMethod);
-      const uniqueRanges = [...new Set(method?.files.map((file: Files) => file.range))] as string[];
+      const uniqueRanges = [
+        ...new Set(method?.files.map((file: Files) => file.range)),
+      ] as string[];
       setRanges(uniqueRanges);
     } else {
       setRanges([]);
@@ -42,7 +46,13 @@ const ExerciseSelector = () => {
   useEffect(() => {
     if (selectedRange) {
       const method = methods.find((m) => m.name === selectedMethod);
-      const uniqueDirections = [...new Set(method?.files.filter((file: Files)=> file.range === selectedRange).map((file: Files) => file.direction))] as string[];
+      const uniqueDirections = [
+        ...new Set(
+          method?.files
+            .filter((file: Files) => file.range === selectedRange)
+            .map((file: Files) => file.direction)
+        ),
+      ] as string[];
       setDirections(uniqueDirections);
     } else {
       setDirections([]);
@@ -52,7 +62,17 @@ const ExerciseSelector = () => {
   useEffect(() => {
     if (selectedRange && selectedDirection) {
       const method = methods.find((m) => m.name === selectedMethod);
-      const uniqueTempos = [...new Set(method?.files.filter((file: Files) => file.range === selectedRange && file.direction === selectedDirection).map((file: Files) => file.tempo))] as string[];
+      const uniqueTempos = [
+        ...new Set(
+          method?.files
+            .filter(
+              (file: Files) =>
+                file.range === selectedRange &&
+                file.direction === selectedDirection
+            )
+            .map((file: Files) => file.tempo)
+        ),
+      ] as string[];
       setTempos(uniqueTempos);
     } else {
       setTempos([]);
@@ -60,69 +80,86 @@ const ExerciseSelector = () => {
   }, [selectedRange, selectedDirection, methods]);
 
   return (
-    <div>
+    <Flex align="center" padding="5" boxShadow="xl" rounded="md" wrap="wrap">
       {/* Exercise Selector */}
-      <select value={selectedExercise || ''} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedExercise(e.target.value)}>
-        <option value="">Select Exercise</option>
-        {exercises?.map((exercise) => (
-          <option key={exercise.id} value={exercise.name}>
-            {exercise.name}
-          </option>
-        ))}
-      </select>
-
-      {/* Method Selector  */}
-      {selectedExercise && (
-        <select value={selectedMethod || ''} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedMethod(e.target.value)}>
-          <option value="">Select Method</option>
-          {methods.map((method) => (
-            <option key={method.id} value={method.name}>
-              {method.name}
+      <Box mr="4">
+        <Select 
+          placeholder="Select Exercise"
+          value={selectedExercise || ''} 
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedExercise(e.target.value)}>
+          {exercises?.map((exercise) => (
+            <option key={exercise.id} value={exercise.name}>
+              {exercise.name}
             </option>
           ))}
-        </select>
+        </Select>
+      </Box>
+
+      {/* Method Selector */}
+      {selectedExercise && (
+        <Box mr="4">
+          <Select 
+            placeholder="Select Method"
+            value={selectedMethod || ''} 
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedMethod(e.target.value)}>
+            {methods.map((method) => (
+              <option key={method.id} value={method.name}>
+                {method.name}
+              </option>
+            ))}
+          </Select>
+        </Box>
       )}
 
-      {/* Range Selector  */}
+      {/* Range Selector */}
       {selectedMethod && (
-        <select value={selectedRange || ''} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedRange(e.target.value)}>
-          <option value="">Select Range</option>
-          {ranges.map((range, index) => (
-            <option key={index} value={range}>
-              {range}
-            </option>
-          ))}
-        </select>
+        <Box mr="4">
+          <Select 
+            placeholder="Select Range"
+            value={selectedRange || ''} 
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedRange(e.target.value)}>
+            {ranges.map((range, index) => (
+              <option key={index} value={range}>
+                {range}
+              </option>
+            ))}
+          </Select>
+        </Box>
       )}
 
       {/* Direction Selector */}
       {selectedRange && (
-        <select value={selectedDirection || ''} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedDirection(e.target.value)}>
-          <option value="">Select Direction</option>
-          {directions.map((direction, index) => (
-            <option key={index} value={direction}>
-              {direction}
-            </option>
-          ))}
-        </select>
+        <Box mr="4">
+          <Select 
+            placeholder="Select Direction"
+            value={selectedDirection || ''} 
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedDirection(e.target.value)}>
+            {directions.map((direction, index) => (
+              <option key={index} value={direction}>
+                {direction}
+              </option>
+            ))}
+          </Select>
+        </Box>
       )}
 
-      {/* Tempo Selector  */}
+      {/* Tempo Selector */}
       {selectedDirection && (
-        <select value={selectedTempo || ''} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedTempo(e.target.value)}>
-          <option value="">Select Tempo</option>
-          {tempos.map((tempo, index) => (
-            <option key={index} value={tempo}>
-              {tempo}
-            </option>
-          ))}
-        </select>
+        <Box mr="4">
+          <Select 
+            placeholder="Select Tempo"
+            value={selectedTempo || ''} 
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedTempo(e.target.value)}>
+            {tempos.map((tempo, index) => (
+              <option key={index} value={tempo}>
+                {tempo}
+              </option>
+            ))}
+          </Select>
+        </Box>
       )}
-    </div>
+    </Flex>
   );
 };
 
 export default ExerciseSelector;
-
-
-
