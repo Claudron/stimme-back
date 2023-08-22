@@ -87,22 +87,35 @@ const ExerciseSelector = () => {
   }, [selectedRange, selectedDirection, methods]);
 
   
-    const getSelectedFile = (): File | null => {
-      if (selectedMethod && selectedRange && selectedDirection && selectedTempo) {
-        const method = methods.find((m) => m.name === selectedMethod);
-        const fileObj = method?.files.find(
-          (file: Files) =>
-            file.range === selectedRange &&
-            file.direction === selectedDirection &&
-            file.tempo === selectedTempo
-        );
-        console.log(fileObj);
-        return fileObj || null;
-        
+  const getSelectedFile = (): File | null => {
+    if (selectedMethod && selectedRange && selectedDirection && selectedTempo) {
+      const method = methods.find((m) => m.name === selectedMethod);
+      const fileObj = method?.files.find(
+        (file: Files) =>
+          file.range === selectedRange &&
+          file.direction === selectedDirection &&
+          file.tempo === selectedTempo
+      );
+  
+      if (fileObj) {
+        // Find the parent exercise
+        const parentExercise = exercises?.find(ex => ex.name === selectedExercise);
+  
+        // Add parent exercise information to the file object
+        const enhancedFileObj: File = {
+          ...fileObj,
+          ExerciseName: parentExercise?.name,
+          // add any other fields from parentExercise you need here...
+          methodName: method.name
+        };
+  
+        console.log(enhancedFileObj);
+        return enhancedFileObj;
       }
-      return null;
-    };
-
+    }
+    return null;
+  };
+  
     const handleAddToPlaylist = () => {
         const selectedFile = getSelectedFile();
         if (selectedFile) {
