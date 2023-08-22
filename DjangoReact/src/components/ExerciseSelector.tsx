@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import useExercise from "../hooks/useExercise";
+import { Select, Box, Flex, Button } from "@chakra-ui/react";
+import usePlaylistStore from "../store/useExerciseStore";
 import { Files } from "../hooks/useExercise";
-import { Select, Box, Flex } from "@chakra-ui/react";
+import { File } from "../store/useExerciseStore";
+
 
 
 const ExerciseSelector = () => {
@@ -18,6 +21,10 @@ const ExerciseSelector = () => {
   );
   const [tempos, setTempos] = useState<string[]>([]); // State to keep track of available tempos based on the selected range and direction
   const [selectedTempo, setSelectedTempo] = useState<string | null>(null);
+
+  const addToPLaylist = usePlaylistStore(s => s.addToPlaylist)
+
+
 
   useEffect(() => {
     if (selectedExercise) {
@@ -79,14 +86,43 @@ const ExerciseSelector = () => {
     }
   }, [selectedRange, selectedDirection, methods]);
 
+  
+    const getSelectedFile = (): File | null => {
+      if (selectedMethod && selectedRange && selectedDirection && selectedTempo) {
+        const method = methods.find((m) => m.name === selectedMethod);
+        const fileObj = method?.files.find(
+          (file: Files) =>
+            file.range === selectedRange &&
+            file.direction === selectedDirection &&
+            file.tempo === selectedTempo
+        );
+        console.log(fileObj);
+        return fileObj || null;
+        
+      }
+      return null;
+    };
+
+    const handleAddToPlaylist = () => {
+        const selectedFile = getSelectedFile();
+        if (selectedFile) {
+          addToPLaylist(selectedFile); // Add the selected file to the playlist
+        }
+      };
+   
+  
+
   return (
     <Flex align="center" padding="5" boxShadow="xl" rounded="md" wrap="wrap">
       {/* Exercise Selector */}
       <Box mr="4">
-        <Select 
+        <Select
           placeholder="Select Exercise"
-          value={selectedExercise || ''} 
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedExercise(e.target.value)}>
+          value={selectedExercise || ""}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setSelectedExercise(e.target.value)
+          }
+        >
           {exercises?.map((exercise) => (
             <option key={exercise.id} value={exercise.name}>
               {exercise.name}
@@ -98,10 +134,13 @@ const ExerciseSelector = () => {
       {/* Method Selector */}
       {selectedExercise && (
         <Box mr="4">
-          <Select 
+          <Select
             placeholder="Select Method"
-            value={selectedMethod || ''} 
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedMethod(e.target.value)}>
+            value={selectedMethod || ""}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setSelectedMethod(e.target.value)
+            }
+          >
             {methods.map((method) => (
               <option key={method.id} value={method.name}>
                 {method.name}
@@ -114,10 +153,13 @@ const ExerciseSelector = () => {
       {/* Range Selector */}
       {selectedMethod && (
         <Box mr="4">
-          <Select 
+          <Select
             placeholder="Select Range"
-            value={selectedRange || ''} 
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedRange(e.target.value)}>
+            value={selectedRange || ""}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setSelectedRange(e.target.value)
+            }
+          >
             {ranges.map((range, index) => (
               <option key={index} value={range}>
                 {range}
@@ -130,10 +172,13 @@ const ExerciseSelector = () => {
       {/* Direction Selector */}
       {selectedRange && (
         <Box mr="4">
-          <Select 
+          <Select
             placeholder="Select Direction"
-            value={selectedDirection || ''} 
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedDirection(e.target.value)}>
+            value={selectedDirection || ""}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setSelectedDirection(e.target.value)
+            }
+          >
             {directions.map((direction, index) => (
               <option key={index} value={direction}>
                 {direction}
@@ -146,10 +191,13 @@ const ExerciseSelector = () => {
       {/* Tempo Selector */}
       {selectedDirection && (
         <Box mr="4">
-          <Select 
+          <Select
             placeholder="Select Tempo"
-            value={selectedTempo || ''} 
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedTempo(e.target.value)}>
+            value={selectedTempo || ""}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setSelectedTempo(e.target.value)
+            }
+          >
             {tempos.map((tempo, index) => (
               <option key={index} value={tempo}>
                 {tempo}
@@ -158,6 +206,8 @@ const ExerciseSelector = () => {
           </Select>
         </Box>
       )}
+      <Button onClick={handleAddToPlaylist}>Add to Playlist</Button>
+     
     </Flex>
   );
 };

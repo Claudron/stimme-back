@@ -12,8 +12,6 @@ import {
   ListItem,
   List,
 } from "@chakra-ui/react";
-import useAudioList from "../hooks/useAudioList";
-import useAudioDetail from "../hooks/useAudioDetail"; 
 
 // type Audio = {
 //   id: number;
@@ -28,15 +26,8 @@ const AudioPlayer = () => {
   const [currentTrackId, setCurrentTrackId] = useState<number | undefined>();
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { data: audioListData } = useAudioList();
-  const { data: audioDetail } = useAudioDetail(currentTrackId?.toString());
   
-  useEffect(() => {
-    if (audioListData && audioListData.length > 0 && !currentTrackId) {
-      setCurrentTrackId(audioListData[0].id);
-    }
-  }, [audioListData]);
-
+  
   const playpauseTrack = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -64,11 +55,11 @@ const AudioPlayer = () => {
 
   return (
     <VStack spacing={4} alignItems="center">
-      <Text fontSize="xl">{audioDetail?.title || "Loading..."}</Text>
+      <Text fontSize="xl">{ }</Text>
 
       <audio
         ref={audioRef}
-        src={audioDetail?.audio_file}
+        
         onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
         onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
         onEnded={playpauseTrack}
@@ -118,24 +109,6 @@ const AudioPlayer = () => {
           <SliderThumb />
         </Slider>
       </Box>
-
-      <VStack spacing={2} align="start" w="100%">
-        <List alignItems="center">
-          {audioListData?.map((audioFile) => (
-            <ListItem key={audioFile.id}>
-              <Button
-                whiteSpace={"normal"}
-                textAlign="left"
-                fontSize="lg"
-                variant="link"
-                onClick={() => setCurrentTrackId(audioFile.id)}
-              >
-                {audioFile.title}
-              </Button>
-            </ListItem>
-          ))}
-        </List>
-      </VStack>
     </VStack>
   );
 };

@@ -1,9 +1,16 @@
+import { SimpleGrid } from "@chakra-ui/react";
 import AudioPlayer from "../components/AudioPlayer";
-import useExerciseList from "../components/ExerciseList";
 import ExerciseSelector from "../components/ExerciseSelector";
+import Playlist from "../components/Playlist";
 
 const DashboardPage = () => {
-  return <ExerciseSelector />
+  return (
+    <SimpleGrid>
+      <AudioPlayer />
+      <ExerciseSelector />
+      <Playlist />
+    </SimpleGrid>
+  );
 };
 
 export default DashboardPage;
