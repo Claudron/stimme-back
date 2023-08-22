@@ -54,7 +54,8 @@ const AudioPlayer = () => {
   };
 
   return (
-    <VStack spacing={4} alignItems="center">
+   
+    <HStack spacing={4} alignItems="center">
       <Text fontSize="xl">{ }</Text>
 
       <audio
@@ -109,7 +110,7 @@ const AudioPlayer = () => {
           <SliderThumb />
         </Slider>
       </Box>
-    </VStack>
+    </ HStack>
   );
 };
 
