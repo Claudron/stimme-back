@@ -1,26 +1,34 @@
 import { create } from 'zustand';
+import { v4 as uuidv4 } from 'uuid'; // Import the v4 function from the uuid library
 
 export interface File {
-    id: number;
-    direction: string;
-    range: string;
-    tempo: string;
+    id: number; // This is the original ID of the file
+    uniqueId: string; // This is the unique ID for the playlist item (now a string)
     file: string;
-    exercise_method: number;
 }
 
 interface Playlist {
   playlist: File[];
   addToPlaylist: (file: File) => void;
   loadPlaylist: (files: File[]) => void;
-  removeFromPlaylist: (fileId: number) => void;
+  removeFromPlaylist: (uniqueId: string) => void; // Updated to accept a string
 }
 
 const usePlaylistStore = create<Playlist>((set) => ({
   playlist: [],
-  addToPlaylist: (file) => set((state) => ({ playlist: [...state.playlist, file] })),
+  addToPlaylist: (file) => set((state) => {
+    const newFile = {
+      ...file,
+      uniqueId: uuidv4() // Generate a unique ID
+    };
+    return {
+      playlist: [...state.playlist, newFile]
+    };
+  }),
   loadPlaylist: (files) => set({ playlist: files }),
-  removeFromPlaylist: (fileId) => set((state) => ({ playlist: state.playlist.filter(file => file.id !== fileId) }))
+  removeFromPlaylist: (uniqueId) => set((state) => ({ 
+    playlist: state.playlist.filter(file => file.uniqueId !== uniqueId) 
+  }))
 }));
 
 export default usePlaylistStore;

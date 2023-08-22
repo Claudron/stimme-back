@@ -13,16 +13,15 @@ const Playlist = () => {
   return (
     <List>
        
-      {playlist?.map((data: File) => (
-         
-            <React.Fragment key={data.id}>
-             <ListItem >
-            {data.file}
-            <Button onClick={() => removeFromPlaylist(data.id)}>Remove</Button>
-            </ListItem>
+       {playlist?.map((data: File) => (
+  <React.Fragment key={data.uniqueId}>
+    <ListItem>
+      {data.file}
+      <Button onClick={() => removeFromPlaylist(data.uniqueId)}>Remove</Button>
+    </ListItem>
+  </React.Fragment>
+))}
 
-            </React.Fragment>
-      ))}
     </List>
   );
 };
