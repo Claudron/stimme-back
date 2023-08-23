@@ -4,15 +4,20 @@ import ExerciseSelector from "../components/ExerciseSelector";
 import Playlist from "../components/Playlist";
 import usePlaylistStore from "../store/useExerciseStore";
 
-const DashboardPage = () => {
+const PracticePage = () => {
   const playlist = usePlaylistStore((state) => state.playlist);
 
   return (
     <Grid>
       <GridItem display="flex" alignItems="center" justifyContent="center">
-        <AudioPlayer playlist={playlist}/>
+        <AudioPlayer playlist={playlist} />
       </GridItem>
-      <GridItem display="flex" alignItems="center" justifyContent="center" marginBottom={2}>
+      <GridItem
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        marginBottom={2}
+      >
         <ExerciseSelector />
       </GridItem>
       <GridItem display="flex" alignItems="center" justifyContent="center">
@@ -24,4 +29,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default PracticePage;

@@ -26,7 +26,7 @@ const Playlist = () => {
   const theme = useTheme(); // <-- get the theme
   const selectedItemColor = theme.colors.teal[100];
   const LstItemHover = theme.colors.gray[600];
-  const removeItemColor = theme.colors.red[900];
+  const removeItemColor = theme.colors.pink[600];
 
   console.log(playlist);
 

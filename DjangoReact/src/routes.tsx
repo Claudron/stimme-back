@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
-import DashboardPage from "./pages/DashboardPage";
-import DownloadPage from "./pages/DownloadPage";
+import PracticePage from "./pages/PracticePage";
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import LoginPage from "./pages/LoginPage";
@@ -23,9 +22,18 @@ const router = createBrowserRouter([
       { path: "login/", element: <LoginPage /> },
       { path: "register/", element: <RegisterUserPage /> },
       { path: "activate/:uid/:token", element: <UserActivationPage /> },
-      { path: "resend_activation/", element: <SendActivationEmailSuccessPage /> },
-      { path: "request/reset/password/", element: <RequestResetPasswordPage /> },
-      { path: "/password/reset/confirm/:uid/:token", element: <ResetPasswordPage /> },
+      {
+        path: "resend_activation/",
+        element: <SendActivationEmailSuccessPage />,
+      },
+      {
+        path: "request/reset/password/",
+        element: <RequestResetPasswordPage />,
+      },
+      {
+        path: "/password/reset/confirm/:uid/:token",
+        element: <ResetPasswordPage />,
+      },
     ],
   },
   {
@@ -33,8 +41,7 @@ const router = createBrowserRouter([
     children: [
       { path: "posts/", element: <Posts /> },
       { path: "posts/:id", element: <PostDetailPage /> },
-      { path: "dashboard/", element: <DashboardPage /> },
-      { path: "download/", element: <DownloadPage /> },
+      { path: "practice-player/", element: <PracticePage /> },
       { path: "account/", element: <UserAccountPage /> },
     ],
   },
