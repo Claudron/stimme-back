@@ -24,7 +24,6 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
 
   const {
     currentTrackIndex,
-    // setCurrentTrackIndex, // set by clicking item in list
     incrementTrackIndex,
     decrementTrackIndex,
   } = useExerciseStore();
