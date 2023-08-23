@@ -23,6 +23,10 @@ const Playlist = () => {
 
   console.log(playlist);
 
+  const moveItemUp = usePlaylistStore((s) => s.moveItemUp);
+  const moveItemDown = usePlaylistStore((s) => s.moveItemDown);
+
+
   return (
     <List>
       {playlist?.map((data: File, index: number) => (
@@ -60,6 +64,8 @@ const Playlist = () => {
               TEMPO:
             </Badge>
             {data.tempo}
+            <Button size="sx" onClick={() => moveItemUp(index)}>Move Up</Button>
+            <Button size="sx" onClick={() => moveItemDown(index)}>Move Down</Button>
             <Button
               marginLeft={3}
               onClick={() => removeFromPlaylist(data.uniqueId)}

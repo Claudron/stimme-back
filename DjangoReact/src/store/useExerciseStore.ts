@@ -20,7 +20,9 @@ interface Playlist {
   removeFromPlaylist: (uniqueId: string) => void;
   setCurrentTrackIndex: (index: number) => void;
   incrementTrackIndex: () => void;
-  decrementTrackIndex: () => void; 
+  decrementTrackIndex: () => void;
+  moveItemUp: (index: number) => void;
+  moveItemDown: (index: number) => void; 
 }
 
 const usePlaylistStore = create<Playlist>((set) => ({
@@ -64,6 +66,24 @@ const usePlaylistStore = create<Playlist>((set) => ({
       currentTrackIndex: Math.max(0, state.currentTrackIndex - 1) 
     }));
   },
+  moveItemUp: (index) => set((state) => {
+    if (index <= 0) return state;
+    const playlistCopy = [...state.playlist];
+    const temp = playlistCopy[index - 1];
+    playlistCopy[index - 1] = playlistCopy[index];
+    playlistCopy[index] = temp;
+    return { playlist: playlistCopy };
+  }),
+
+  moveItemDown: (index) => set((state) => {
+    if (index >= state.playlist.length - 1) return state;
+    const playlistCopy = [...state.playlist];
+    const temp = playlistCopy[index + 1];
+    playlistCopy[index + 1] = playlistCopy[index];
+    playlistCopy[index] = temp;
+    return { playlist: playlistCopy };
+  }),
+
 }));
 
 export default usePlaylistStore;
