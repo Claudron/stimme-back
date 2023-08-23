@@ -8,7 +8,12 @@ import {
   SliderThumb,
   Text,
   HStack,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  IconButton,
 } from "@chakra-ui/react";
+import { FiVolume2 } from "react-icons/fi";
 import useExerciseStore, { File } from "../store/useExerciseStore";
 
 type AudioPlayerProps = {
@@ -20,6 +25,7 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   
 
   const {
@@ -71,14 +77,14 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
 
   return (
     <HStack spacing={4} alignItems="center">
-       <audio
-      ref={audioRef}
-      src={playlist[currentTrackIndex]?.file}
-      onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
-      onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
-      onEnded={playpauseTrack}
-    />
-
+      <audio
+        ref={audioRef}
+        src={playlist[currentTrackIndex]?.file}
+        onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
+        onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
+        onEnded={playpauseTrack}
+      />
+  
       <HStack spacing={4}>
         <Button onClick={playPreviousTrack}>Previous</Button>
         <Button onClick={playpauseTrack}>
@@ -86,18 +92,17 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
         </Button>
         <Button onClick={playNextTrack}>Next</Button>
       </HStack>
-
+  
       <Box width="300px">
         <Text>
           {Math.floor(currentTime / 60)}:
-          {Math.floor(currentTime % 60)
-            .toString()
-            .padStart(2, "0")}
+          {Math.floor(currentTime % 60).toString().padStart(2, "0")}
         </Text>
         <Slider
           value={duration ? (currentTime / duration) * 100 : 0}
-          onChange={(val: number) => seekTo({ target: { value: val.toString() }} as React.ChangeEvent<HTMLInputElement>)}
-
+          onChange={(val: number) => 
+            seekTo({ target: { value: val.toString() }} as React.ChangeEvent<HTMLInputElement>)
+          }
         >
           <SliderTrack>
             <SliderFilledTrack />
@@ -106,27 +111,39 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
         </Slider>
         <Text>
           {Math.floor(duration / 60)}:
-          {Math.floor(duration % 60)
-            .toString()
-            .padStart(2, "0")}
+          {Math.floor(duration % 60).toString().padStart(2, "0")}
         </Text>
       </Box>
-
-      <Box width="300px">
-        <Slider
-          defaultValue={100}
-          onChange={(val) =>
-            setVolume({ target: { value: val.toString() } } as any)
-          }
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </Box>
+  
+      <Popover
+        isOpen={isVolumeOpen}
+        onClose={() => setIsVolumeOpen(false)}
+        placement="bottom"
+      >
+        <PopoverTrigger>
+          <IconButton
+            aria-label="Volume"
+            icon={<FiVolume2 />}
+            onClick={() => setIsVolumeOpen(!isVolumeOpen)}
+          />
+        </PopoverTrigger>
+        <PopoverContent>
+          <Slider
+            defaultValue={100}
+            onChange={(val) =>
+              setVolume({ target: { value: val.toString() } } as any)
+            }
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </PopoverContent>
+      </Popover>
     </HStack>
   );
+  
 };
 
 export default AudioPlayer;
