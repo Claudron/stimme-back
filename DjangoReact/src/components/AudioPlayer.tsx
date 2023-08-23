@@ -7,27 +7,29 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Text,
-  VStack,
   HStack,
-  ListItem,
-  List,
 } from "@chakra-ui/react";
+import { File } from "../store/useExerciseStore";
 
-// type Audio = {
-//   id: number;
-//   title: string;
-//   audio_file: string;
-// };
+type AudioPlayerProps = {
+  playlist: File[];
+};
 
-const AudioPlayer = () => {
+const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [currentTrackId, setCurrentTrackId] = useState<number | undefined>();
-  
+  const [trackIndex, setTrackIndex] = useState<number>(0); // Keep track of the current track index
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  
-  
+
+  useEffect(() => {
+    if (audioRef.current) {
+        console.log('Audio Source:', playlist[trackIndex]?.file);
+        audioRef.current.currentTime = 0;
+        setCurrentTime(0);
+    }
+}, [trackIndex, playlist]);
+
   const playpauseTrack = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -37,6 +39,18 @@ const AudioPlayer = () => {
         audio.play();
       }
       setIsPlaying(!isPlaying);
+    }
+  };
+
+  const playNextTrack = () => {
+    if (trackIndex < playlist.length - 1) {
+      setTrackIndex(trackIndex + 1);
+    }
+  };
+
+  const playPreviousTrack = () => {
+    if (trackIndex > 0) {
+      setTrackIndex(trackIndex - 1);
     }
   };
 
@@ -54,21 +68,21 @@ const AudioPlayer = () => {
   };
 
   return (
-   
     <HStack spacing={4} alignItems="center">
-      <Text fontSize="xl">{ }</Text>
-
       <audio
         ref={audioRef}
-        
+        src={playlist[trackIndex]?.file}
         onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
         onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
         onEnded={playpauseTrack}
       />
 
       <HStack spacing={4}>
-        {/* Note: Prev/Next functionality can be added if needed */}
-        <Button onClick={playpauseTrack}>{isPlaying ? "Pause" : "Play"}</Button>
+        <Button onClick={playPreviousTrack}>Previous</Button>
+        <Button onClick={playpauseTrack}>
+          {isPlaying ? "Pause" : "Play"}
+        </Button>
+        <Button onClick={playNextTrack}>Next</Button>
       </HStack>
 
       <Box width="300px">
@@ -80,9 +94,8 @@ const AudioPlayer = () => {
         </Text>
         <Slider
           value={duration ? (currentTime / duration) * 100 : 0}
-          onChange={(val) =>
-            seekTo({ target: { value: val.toString() } } as any)
-          }
+          onChange={(val: number) => seekTo({ target: { value: val.toString() }} as React.ChangeEvent<HTMLInputElement>)}
+
         >
           <SliderTrack>
             <SliderFilledTrack />
@@ -110,7 +123,7 @@ const AudioPlayer = () => {
           <SliderThumb />
         </Slider>
       </Box>
-    </ HStack>
+    </HStack>
   );
 };
 
