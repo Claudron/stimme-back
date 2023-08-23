@@ -126,7 +126,7 @@ const ExerciseSelector = () => {
   
 
   return (
-    <Flex align="center" padding="5" boxShadow="xl" rounded="md" wrap="wrap">
+    <Flex align="center" padding="5"  rounded="md" wrap="wrap">
       {/* Exercise Selector */}
       <Box mr="4">
         <Select

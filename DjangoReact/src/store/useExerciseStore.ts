@@ -2,8 +2,8 @@ import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid'; 
 
 export interface File {
-    id: number; // This is the original ID of the file
-    uniqueId: string; // This is the unique ID for the playlist item (now a string)
+    id: number;
+    uniqueId: string;
     file: string;
     ExerciseName: string;
     methodName: string;
@@ -14,26 +14,56 @@ export interface File {
 
 interface Playlist {
   playlist: File[];
+  currentTrackIndex: number; 
   addToPlaylist: (file: File) => void;
   loadPlaylist: (files: File[]) => void;
-  removeFromPlaylist: (uniqueId: string) => void; 
+  removeFromPlaylist: (uniqueId: string) => void;
+  setCurrentTrackIndex: (index: number) => void;
+  incrementTrackIndex: () => void;
+  decrementTrackIndex: () => void; 
 }
 
 const usePlaylistStore = create<Playlist>((set) => ({
   playlist: [],
-  addToPlaylist: (file) => set((state) => {
-    const newFile = {
-      ...file,
-      uniqueId: uuidv4() // Generate a unique ID
-    };
-    return {
-      playlist: [...state.playlist, newFile]
-    };
-  }),
-  loadPlaylist: (files) => set({ playlist: files }),
-  removeFromPlaylist: (uniqueId) => set((state) => ({ 
-    playlist: state.playlist.filter(file => file.uniqueId !== uniqueId) 
-  }))
+  currentTrackIndex: 0,
+  addToPlaylist: (file) => {
+    const newFile = { ...file, uniqueId: uuidv4() };
+    set((state) => ({
+      playlist: [...state.playlist, newFile],
+      currentTrackIndex: state.playlist.length === 0 ? 0 : state.currentTrackIndex,
+    }));
+  },
+  loadPlaylist: (files) => {
+    set({ playlist: files, currentTrackIndex: 0 });
+  },
+  removeFromPlaylist: (uniqueId) => {
+    set((state) => {
+      const newPlaylist = state.playlist.filter(file => file.uniqueId !== uniqueId);
+      let newIndex = state.currentTrackIndex;
+      
+      if (state.playlist[state.currentTrackIndex].uniqueId === uniqueId) {
+        newIndex = Math.max(0, state.currentTrackIndex - 1);
+      }
+      
+      return {
+        playlist: newPlaylist,
+        currentTrackIndex: newIndex,
+      };
+    });
+  },
+  setCurrentTrackIndex: (index) => {
+    set({ currentTrackIndex: index });
+  },
+  incrementTrackIndex: () => {
+    set((state) => ({ 
+      currentTrackIndex: Math.min(state.playlist.length - 1, state.currentTrackIndex + 1) 
+    }));
+  },
+  decrementTrackIndex: () => {
+    set((state) => ({ 
+      currentTrackIndex: Math.max(0, state.currentTrackIndex - 1) 
+    }));
+  },
 }));
 
 export default usePlaylistStore;

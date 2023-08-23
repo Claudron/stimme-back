@@ -1,5 +1,5 @@
 import usePlaylistStore from "../store/useExerciseStore";
-import { Badge, Button, Heading, List, ListItem } from "@chakra-ui/react";
+import { Badge, Button, Heading, List, ListItem, useTheme } from "@chakra-ui/react";
 import { File } from "../store/useExerciseStore";
 import React from "react";
 
@@ -7,15 +7,21 @@ import React from "react";
 const Playlist = () => {
     const playlist = usePlaylistStore(s => s.playlist);
     const removeFromPlaylist = usePlaylistStore(s => s.removeFromPlaylist);
+    const currentPlayingIndex = usePlaylistStore((state) => state.currentTrackIndex);
+
+    const theme = useTheme(); // <-- get the theme
+    const greenColor = theme.colors.teal[100]; // <-- this is the default green used by Chakra for badges
+
+
     
     console.log(playlist);
     
   return (
     <List>
        
-       {playlist?.map((data: File) => (
+       {playlist?.map((data: File, index: number) => (
   <React.Fragment key={data.uniqueId}>
-    <ListItem>
+    <ListItem style={index === currentPlayingIndex ? { border: `1px solid ${greenColor}`, borderRadius: "2px"} : {}}>
       <Heading as='h3' size='lg'>{data.ExerciseName}</Heading>
       <Heading as='h5' size='sm'>
       {data.methodName}

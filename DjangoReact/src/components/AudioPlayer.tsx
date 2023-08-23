@@ -9,7 +9,7 @@ import {
   Text,
   HStack,
 } from "@chakra-ui/react";
-import { File } from "../store/useExerciseStore";
+import useExerciseStore, { File } from "../store/useExerciseStore";
 
 type AudioPlayerProps = {
   playlist: File[];
@@ -19,16 +19,23 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [trackIndex, setTrackIndex] = useState<number>(0); // Keep track of the current track index
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+
+  const {
+    currentTrackIndex,
+    // setCurrentTrackIndex, // set by clicking item in list
+    incrementTrackIndex,
+    decrementTrackIndex,
+  } = useExerciseStore();
 
   useEffect(() => {
     if (audioRef.current) {
-        console.log('Audio Source:', playlist[trackIndex]?.file);
+        console.log('Audio Source:', playlist[currentTrackIndex]?.file);
         audioRef.current.currentTime = 0;
         setCurrentTime(0);
     }
-}, [trackIndex, playlist]);
+  }, [currentTrackIndex, playlist]);
 
   const playpauseTrack = () => {
     const audio = audioRef.current;
@@ -43,15 +50,11 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
   };
 
   const playNextTrack = () => {
-    if (trackIndex < playlist.length - 1) {
-      setTrackIndex(trackIndex + 1);
-    }
+    incrementTrackIndex();
   };
 
   const playPreviousTrack = () => {
-    if (trackIndex > 0) {
-      setTrackIndex(trackIndex - 1);
-    }
+    decrementTrackIndex();
   };
 
   const seekTo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,13 +72,13 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
 
   return (
     <HStack spacing={4} alignItems="center">
-      <audio
-        ref={audioRef}
-        src={playlist[trackIndex]?.file}
-        onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
-        onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
-        onEnded={playpauseTrack}
-      />
+       <audio
+      ref={audioRef}
+      src={playlist[currentTrackIndex]?.file}
+      onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
+      onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
+      onEnded={playpauseTrack}
+    />
 
       <HStack spacing={4}>
         <Button onClick={playPreviousTrack}>Previous</Button>

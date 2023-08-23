@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import AudioPlayer from "../components/AudioPlayer";
 import ExerciseSelector from "../components/ExerciseSelector";
 import Playlist from "../components/Playlist";
@@ -12,7 +12,7 @@ const DashboardPage = () => {
       <GridItem display="flex" alignItems="center" justifyContent="center">
         <AudioPlayer playlist={playlist}/>
       </GridItem>
-      <GridItem display="flex" alignItems="center" justifyContent="center">
+      <GridItem display="flex" alignItems="center" justifyContent="center" marginBottom={2}>
         <ExerciseSelector />
       </GridItem>
       <GridItem display="flex" alignItems="center" justifyContent="center">
