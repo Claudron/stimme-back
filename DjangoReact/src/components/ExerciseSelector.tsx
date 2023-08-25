@@ -3,9 +3,7 @@ import useExercise from "../hooks/useExercise";
 import { Select, Box, Flex, Button } from "@chakra-ui/react";
 import usePlaylistStore from "../store/useExerciseStore";
 import { Files } from "../hooks/useExercise";
-import { File } from "../store/useExerciseStore";
-
-
+import { ExerciseFile } from "../store/useExerciseStore";
 
 const ExerciseSelector = () => {
   const { data: exercises } = useExercise();
@@ -22,9 +20,7 @@ const ExerciseSelector = () => {
   const [tempos, setTempos] = useState<string[]>([]); // State to keep track of available tempos based on the selected range and direction
   const [selectedTempo, setSelectedTempo] = useState<string | null>(null);
 
-  const addToPLaylist = usePlaylistStore(s => s.addToPlaylist)
-
-
+  const addToPLaylist = usePlaylistStore((s) => s.addToPlaylist);
 
   useEffect(() => {
     if (selectedExercise) {
@@ -86,8 +82,7 @@ const ExerciseSelector = () => {
     }
   }, [selectedRange, selectedDirection, methods]);
 
-  
-  const getSelectedFile = (): File | null => {
+  const getSelectedFile = (): ExerciseFile | null => {
     if (selectedMethod && selectedRange && selectedDirection && selectedTempo) {
       const method = methods.find((m) => m.name === selectedMethod);
       const fileObj = method?.files.find(
@@ -96,37 +91,37 @@ const ExerciseSelector = () => {
           file.direction === selectedDirection &&
           file.tempo === selectedTempo
       );
-  
+
       if (fileObj) {
         // Find the parent exercise
-        const parentExercise = exercises?.find(ex => ex.name === selectedExercise);
-  
+        const parentExercise = exercises?.find(
+          (ex) => ex.name === selectedExercise
+        );
+
         // Add parent exercise information to the file object
-        const enhancedFileObj: File = {
+        const enhancedFileObj: ExerciseFile = {
           ...fileObj,
           ExerciseName: parentExercise?.name,
           // add any other fields from parentExercise you need here...
-          methodName: method.name
+          methodName: method.name,
         };
-  
+
         console.log(enhancedFileObj);
         return enhancedFileObj;
       }
     }
     return null;
   };
-  
-    const handleAddToPlaylist = () => {
-        const selectedFile = getSelectedFile();
-        if (selectedFile) {
-          addToPLaylist(selectedFile); // Add the selected file to the playlist
-        }
-      };
-   
-  
+
+  const handleAddToPlaylist = () => {
+    const selectedFile = getSelectedFile();
+    if (selectedFile) {
+      addToPLaylist(selectedFile); // Add the selected file to the playlist
+    }
+  };
 
   return (
-    <Flex align="center" padding="5"  rounded="md" wrap="wrap">
+    <Flex align="center" padding="5" rounded="md" wrap="wrap">
       {/* Exercise Selector */}
       <Box mr="4">
         <Select
@@ -220,7 +215,6 @@ const ExerciseSelector = () => {
         </Box>
       )}
       <Button onClick={handleAddToPlaylist}>Add to Playlist</Button>
-     
     </Flex>
   );
 };

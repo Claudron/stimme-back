@@ -17,15 +17,16 @@ interface Playlist {
   currentTrackIndex: number; 
   addToPlaylist: (file: File) => void;
   loadPlaylist: (files: File[]) => void;
+  clearPlaylist: () => void;
   removeFromPlaylist: (uniqueId: string) => void;
   setCurrentTrackIndex: (index: number) => void;
   incrementTrackIndex: () => void;
   decrementTrackIndex: () => void;
   moveItemUp: (index: number) => void;
-  moveItemDown: (index: number) => void; 
+  moveItemDown: (index: number) => void;
 }
 
-const usePlaylistStore = create<Playlist>((set) => ({
+export const usePlaylistStore = create<Playlist>((set) => ({
   playlist: [],
   currentTrackIndex: 0,
   addToPlaylist: (file) => {
@@ -37,6 +38,10 @@ const usePlaylistStore = create<Playlist>((set) => ({
   },
   loadPlaylist: (files) => {
     set({ playlist: files, currentTrackIndex: 0 });
+  },
+  clearPlaylist: () => {
+    set({playlist:[]});
+    console.log("Playlist after clearing:", usePlaylistStore.getState().playlist);
   },
   removeFromPlaylist: (uniqueId) => {
     set((state) => {

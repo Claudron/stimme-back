@@ -2,6 +2,7 @@ from django.db import models
 import os
 import shutil
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 
@@ -58,5 +59,13 @@ class Exercise(models.Model):
     
 
 
+class UserExercisePlaylist(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    playlist = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['user']
 
 

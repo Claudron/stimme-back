@@ -20,6 +20,7 @@ import { Link as ReachLink, useNavigate } from "react-router-dom";
 import { useResendActivationEmail } from "../hooks/useResendActivationEmail";
 import apiClient from "../services/api-client";
 
+
 const LoginPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -29,12 +30,18 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const resendActivationEmail = useResendActivationEmail();
 
+ 
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    
 
     const email = emailRef.current ? emailRef.current.value : "";
     const password = passwordRef.current ? passwordRef.current.value : "";
     const formData = { email, password };
+
+    
 
     // Log the form data to the console
     console.log("Form data being sent:", formData);
@@ -44,6 +51,7 @@ const LoginPage = () => {
       if (emailRef.current) emailRef.current.value = "";
       if (passwordRef.current) passwordRef.current.value = "";
       navigate("/posts");
+      
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.detail) {
         let errorMessage = error.response.data.detail;

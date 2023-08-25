@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ExerciseMethod, ExerciseMethodFile, Exercise
+from .models import ExerciseMethod, ExerciseMethodFile, Exercise, UserExercisePlaylist
 
 
 class ExerciseMethodFileSerializer(serializers.ModelSerializer):
@@ -22,3 +22,11 @@ class ExerciseListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
         fields = ['id', 'name', 'methods']
+
+
+class UserExercisePlaylistSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = UserExercisePlaylist
+        fields = '__all__'
