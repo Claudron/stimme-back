@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, useToast } from "@chakra-ui/react";
 import AudioPlayer from "../components/AudioPlayer";
 import ExerciseSelector from "../components/ExerciseSelector";
 import Playlist from "../components/Playlist";
@@ -15,6 +15,7 @@ const PracticePage = () => {
   const playlist = usePlaylistStore((state) => state.playlist);
   const savePlaylistMutation = useSaveExercisePlaylist();
   const { data: loadedPlaylist } = useLoadExercisePlaylist();
+  const toast = useToast();
 
   useEffect(() => {
     if (loadedPlaylist) {
@@ -27,6 +28,27 @@ const PracticePage = () => {
     savePlaylistMutation.mutate({ playlist });
   }, [playlist]);
 
+  useEffect(() => {
+    if (savePlaylistMutation.isError) {
+      toast({
+        title: "Error saving playlist.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom-left",
+        size: "sm"
+      });
+    } else if (savePlaylistMutation.isSuccess) {
+      toast({
+        title: "Playlist saved successfully!",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom-left",
+        size: "sm"
+      });
+    }
+  }, [savePlaylistMutation.status]);
 
   return (
     <Grid>
@@ -41,11 +63,6 @@ const PracticePage = () => {
       >
         <ExerciseSelector />
       </GridItem>
-      <div>
-        {savePlaylistMutation.isLoading && <p>Saving...</p>}
-        {savePlaylistMutation.isError && <p>Error saving playlist.</p>}
-        {savePlaylistMutation.isSuccess && <p>Playlist saved successfully!</p>}
-      </div>
       <GridItem display="flex" alignItems="center" justifyContent="center">
         <Box height="calc(100vh - 150px)" overflowY="auto">
           <Playlist />
