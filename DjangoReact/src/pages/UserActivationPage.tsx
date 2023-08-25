@@ -37,7 +37,7 @@ const UserActivationPage = () => {
       content = <Heading>{errorMessage}</Heading>;
     }
   } else if (mutation.isSuccess) {
-    content = <Heading>Account activated successfully!</Heading>;
+    content = <Heading>Account activated successfully! Please login</Heading>;
   }
 
   return <AbsoluteCenter>{content}</AbsoluteCenter>;

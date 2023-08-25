@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django_seed',
     'core',
     'content',
-    'exercises',
+    'exercises.apps.ExercisesConfig',
 
 ]
 

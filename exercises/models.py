@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 
 
+
 # Methods
 
 def exercise_method_file_path(instance, filename):
@@ -61,11 +62,12 @@ class Exercise(models.Model):
 
 class UserExercisePlaylist(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    playlist = models.TextField()
+    playlist = models.TextField(default='[]')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ['user']
 
+  
 
