@@ -8,6 +8,7 @@ import {
   useTheme,
   Flex,
   VStack,
+  Text,
 } from "@chakra-ui/react";
 import { File } from "../store/useExerciseStore";
 import { useEffect } from "react";
@@ -37,6 +38,7 @@ const Playlist = () => {
 
   return (
     <List>
+      {playlist && playlist.length === 0 ? (<Text>Playlist is Empty. Add Exercises to your playlist.</Text>) : null}
       {playlist?.map((data: File, index: number) => (
         <ListItem
           key={data.uniqueId}
