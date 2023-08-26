@@ -6,6 +6,7 @@ __pycache__
 db.sqlite3
 media
 .DS_Store
+/static/
 
 # Backup files # 
 *.bak 
@@ -140,3 +141,6 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# Files
+requirements-dev.txt

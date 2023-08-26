@@ -2,7 +2,6 @@ import { Link as ChakraLink, HStack, Heading } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import ColrModeSwitch from "./ColorModeSwitch";
-import usePlaylistStore from "../store/useExerciseStore";
 
 const NavBar = () => {
   const navigate = useNavigate();
