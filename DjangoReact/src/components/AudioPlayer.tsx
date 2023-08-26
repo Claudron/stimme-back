@@ -8,6 +8,7 @@ import {
   SliderThumb,
   Text,
   HStack,
+  VStack,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -26,19 +27,15 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
   const [duration, setDuration] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
-  
 
-  const {
-    currentTrackIndex,
-    incrementTrackIndex,
-    decrementTrackIndex,
-  } = useExerciseStore();
+  const { currentTrackIndex, incrementTrackIndex, decrementTrackIndex } =
+    useExerciseStore();
 
   useEffect(() => {
     if (audioRef.current) {
-        console.log('Audio Source:', playlist[currentTrackIndex]?.file);
-        audioRef.current.currentTime = 0;
-        setCurrentTime(0);
+      console.log("Audio Source:", playlist[currentTrackIndex]?.file);
+      audioRef.current.currentTime = 0;
+      setCurrentTime(0);
     }
   }, [currentTrackIndex, playlist]);
 
@@ -76,32 +73,34 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
   };
 
   return (
-    <HStack spacing={4} alignItems="center">
-      <audio
-        ref={audioRef}
-        src={playlist[currentTrackIndex]?.file}
-        onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
-        onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
-        onEnded={playpauseTrack}
-      />
-  
+    <VStack spacing={4} alignItems="center">
       <HStack spacing={4}>
+        <audio
+          ref={audioRef}
+          src={playlist[currentTrackIndex]?.file}
+          onTimeUpdate={() => setCurrentTime(audioRef.current!.currentTime)}
+          onLoadedMetadata={() => setDuration(audioRef.current!.duration)}
+          onEnded={playpauseTrack}
+        />
+
         <Button onClick={playPreviousTrack}>Previous</Button>
-        <Button onClick={playpauseTrack}>
-          {isPlaying ? "Pause" : "Play"}
-        </Button>
+        <Button onClick={playpauseTrack}>{isPlaying ? "Pause" : "Play"}</Button>
         <Button onClick={playNextTrack}>Next</Button>
       </HStack>
-  
+    <HStack>
       <Box width="300px">
         <Text>
           {Math.floor(currentTime / 60)}:
-          {Math.floor(currentTime % 60).toString().padStart(2, "0")}
+          {Math.floor(currentTime % 60)
+            .toString()
+            .padStart(2, "0")}
         </Text>
         <Slider
           value={duration ? (currentTime / duration) * 100 : 0}
-          onChange={(val: number) => 
-            seekTo({ target: { value: val.toString() }} as React.ChangeEvent<HTMLInputElement>)
+          onChange={(val: number) =>
+            seekTo({
+              target: { value: val.toString() },
+            } as React.ChangeEvent<HTMLInputElement>)
           }
         >
           <SliderTrack>
@@ -111,10 +110,12 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
         </Slider>
         <Text>
           {Math.floor(duration / 60)}:
-          {Math.floor(duration % 60).toString().padStart(2, "0")}
+          {Math.floor(duration % 60)
+            .toString()
+            .padStart(2, "0")}
         </Text>
       </Box>
-  
+
       <Popover
         isOpen={isVolumeOpen}
         onClose={() => setIsVolumeOpen(false)}
@@ -141,9 +142,9 @@ const AudioPlayer = ({ playlist }: AudioPlayerProps) => {
           </Slider>
         </PopoverContent>
       </Popover>
-    </HStack>
+      </HStack>
+    </VStack>
   );
-  
 };
 
 export default AudioPlayer;
