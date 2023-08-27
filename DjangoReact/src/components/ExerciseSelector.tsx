@@ -3,7 +3,7 @@ import useExercise from "../hooks/useExercise";
 import { Select, Box, Flex, Button } from "@chakra-ui/react";
 import usePlaylistStore from "../store/useExerciseStore";
 import { Files } from "../hooks/useExercise";
-import { ExerciseFile } from "../store/useExerciseStore";
+import { File } from "../store/useExerciseStore";
 
 const ExerciseSelector = () => {
   const { data: exercises } = useExercise();
@@ -82,7 +82,7 @@ const ExerciseSelector = () => {
     }
   }, [selectedRange, selectedDirection, methods]);
 
-  const getSelectedFile = (): ExerciseFile | null => {
+  const getSelectedFile = (): File | null => {
     if (selectedMethod && selectedRange && selectedDirection && selectedTempo) {
       const method = methods.find((m) => m.name === selectedMethod);
       const fileObj = method?.files.find(
@@ -99,7 +99,7 @@ const ExerciseSelector = () => {
         );
 
         // Add parent exercise information to the file object
-        const enhancedFileObj: ExerciseFile = {
+        const enhancedFileObj: File = {
           ...fileObj,
           ExerciseName: parentExercise?.name,
           // add any other fields from parentExercise you need here...

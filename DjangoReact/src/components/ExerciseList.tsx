@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import useExercise from "../hooks/useExercise";
 
 interface ExerciseMethod {
@@ -12,14 +12,10 @@ interface ExerciseMethod {
   }[];
 }
 
-interface Exercise {
-  id: number;
-  name: string;
-  methods: ExerciseMethod[];
-}
+
 
 const useExerciseList = () => {
-  const { data: exercises = [], isLoading, isError } = useExercise();
+  const { data: exercises = [],  } = useExercise();
 
   const exerciseRef = useRef<HTMLSelectElement>(null);
   const methodRef = useRef<HTMLSelectElement>(null);

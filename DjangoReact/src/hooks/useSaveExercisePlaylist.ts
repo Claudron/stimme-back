@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import Playlist from "../components/Playlist";
 import apiClient from "../services/api-client";
-import { ExerciseFile } from "../store/useExerciseStore";
+import { File } from "../store/useExerciseStore";
 
 interface Playlist {
-    playlist: ExerciseFile[] ;
+    playlist: File[] ;
 }
 
 
