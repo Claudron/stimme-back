@@ -25,9 +25,10 @@ DATABASES = {
 }
 
 
-STATICFILES_DIRS = COMMON_STATICFILES_DIRS + [
-        os.path.join(BASE_DIR, 'DjangoReact', 'dist', 'assets'),
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'DjangoReact', 'dist', 'assets'),
 ]
+
 
 TEMPLATES = COMMON_TEMPLATES.copy()
 TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'DjangoReact', 'dist')]
