@@ -41,4 +41,5 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if getattr(settings, 'SERVE_REACT_FRONTEND', False):
-    urlpatterns.append(re_path(r'^.*', TemplateView.as_view(template_name='DjangoReact/dist/index.html')))
+    urlpatterns.append(re_path(r'^.*', TemplateView.as_view(template_name='index.html')
+))
