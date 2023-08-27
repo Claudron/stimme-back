@@ -11,6 +11,8 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALLOWED_HOSTS = ["localhost"]
 
+SERVE_REACT_FRONTEND = True
+
 RENDER_EXTERNAL_HOSTNAME = os.environ["RENDER_EXTERNAL_HOSTNAME"]
 
 
@@ -28,6 +30,7 @@ DATABASES = {
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'DjangoReact', 'dist', 'assets'),
 ]
+
 
 
 TEMPLATES = COMMON_TEMPLATES.copy()

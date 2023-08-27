@@ -8,6 +8,9 @@ SECRET_KEY = 'django-insecure-fem1nk60z#w-)-%*k!(fys#z%abqc95f15r037*q2%$z+35ffy
 
 ALLOWED_HOSTS = []
 
+SERVE_REACT_FRONTEND = False
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
