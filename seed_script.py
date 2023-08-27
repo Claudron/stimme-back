@@ -1,8 +1,14 @@
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "your_project_name.settings")
+django.setup()
+
 from content.models import PostContent, Category, Tag
 from django_seed import Seed
 from django.contrib.contenttypes.models import ContentType
-seeder = Seed.seeder()
 
+seeder = Seed.seeder()
 
 # run from python shell with:
 # exec(open('seed_script.py').read())
