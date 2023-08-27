@@ -28,12 +28,12 @@ DATABASES = {
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'DjangoReact', 'staticfiles', 'assets'),
+    os.path.join(BASE_DIR, 'staticfiles', 'assets'),
 ]
 
 
 TEMPLATES = COMMON_TEMPLATES.copy()
-TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'DjangoReact', 'staticfiles')]
+TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'staticfiles')]
 
 
 
