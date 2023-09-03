@@ -27,11 +27,6 @@ DATABASES = {
 }
 
 
-TEMPLATES = COMMON_TEMPLATES.copy()
-TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'staticfiles')]
-
-
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
