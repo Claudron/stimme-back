@@ -37,19 +37,19 @@ TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'staticfiles')]
 
 
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#     },
-#     'root': {
-#         'handlers': ['console'],
-#         'level': os.environ.get("LOG_LEVEL", "WARNING").upper(),
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': os.environ.get("LOG_LEVEL", "WARNING").upper(),
+    },
+}
 
 
 # CORS settings
