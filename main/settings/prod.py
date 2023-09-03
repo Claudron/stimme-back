@@ -27,11 +27,6 @@ DATABASES = {
 }
 
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles', 'assets'),
-]
-
-
 TEMPLATES = COMMON_TEMPLATES.copy()
 TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'staticfiles')]
 
