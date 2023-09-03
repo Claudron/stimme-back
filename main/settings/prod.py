@@ -55,7 +55,7 @@ TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'staticfiles')]
 # CORS settings
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS").split(",")
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
 
 CORS_ALLOW_HEADERS = (
     "accept",
@@ -69,7 +69,7 @@ CORS_ALLOW_HEADERS = (
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 
 # CSRF settings
-CSRF_TRUSTED_ORIGINS = os.environ.get("CORS_TRUSTED_ORIGINS").split(",")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CORS_TRUSTED_ORIGINS", "").split(",")
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
