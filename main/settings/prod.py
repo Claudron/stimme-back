@@ -48,11 +48,15 @@ if gcs_credentials_content:
     # Set GS_CREDENTIALS to the path of the temporary file
     GS_CREDENTIALS = temp_credentials_path
 
-    logger.info(f"Temporary GCS credentials file created at: {temp_credentials_path}")
+    logger.info(
+        f"Temporary GCS credentials file created at: {temp_credentials_path}")
     logger.info(f"GS_CREDENTIALS set to: {GS_CREDENTIALS}")
 else:
     logger.error("Environment variable GS_CREDENTIALS not found or is empty.")
 
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'stimme-data'
 
 
 LOGGING = {
