@@ -1,6 +1,7 @@
-import tempfile
 import json
 import os
+import logging
+import tempfile
 from .common import *
 import dj_database_url
 from .common import TEMPLATES as COMMON_TEMPLATES
@@ -31,23 +32,31 @@ DATABASES = {
 # Media File Settings
 MEDIA_URL = '/media/'
 
-# Google Cloud Storeage Settings
+# Google cloud storage setiings
+
+logger = logging.getLogger(__name__)
 
 # Load the JSON content from the environment variable
 gcs_credentials_content = os.environ.get('GCS_CREDENTIALS_CONTENT')
 if gcs_credentials_content:
-    # Create a temporary file and write the credentials content to it
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-        temp_file.write(gcs_credentials_content.encode())
-        temp_credentials_path = temp_file.name
+    try:
+        # Create a temporary file and write the credentials content to it
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.json', mode='wt') as temp_file:
+            temp_file.write(gcs_credentials_content)
+            temp_credentials_path = temp_file.name
 
-    # Set GS_CREDENTIALS to the path of the temporary file
-    GS_CREDENTIALS = temp_credentials_path
+        # Set GS_CREDENTIALS to the path of the temporary file
+        GS_CREDENTIALS = temp_credentials_path
 
+        logger.info(f"Temporary GCS credentials file created at: {temp_credentials_path}")
+    except Exception as e:
+        logger.error(f"Error processing GCS credentials: {e}")
+        raise ValueError(f"Error processing GCS credentials: {e}")
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'stimme-data'
 GS_DEFAULT_ACL = 'publicRead'
+
 
 
 LOGGING = {
