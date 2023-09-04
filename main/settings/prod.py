@@ -8,6 +8,9 @@ from .common import TEMPLATES as COMMON_TEMPLATES
 from .common import STATICFILES_DIRS as COMMON_STATICFILES_DIRS
 
 
+logger = logging.getLogger(__name__)
+
+
 DEBUG = False
 
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -34,28 +37,21 @@ MEDIA_URL = '/media/'
 
 # Google cloud storage setiings
 
-logger = logging.getLogger(__name__)
-
 # Load the JSON content from the environment variable
-gcs_credentials_content = os.environ.get('GCS_CREDENTIALS_CONTENT')
+gcs_credentials_content = os.environ.get('GS_CREDENTIALS')
 if gcs_credentials_content:
-    try:
-        # Create a temporary file and write the credentials content to it
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.json', mode='wt') as temp_file:
-            temp_file.write(gcs_credentials_content)
-            temp_credentials_path = temp_file.name
+    # Create a temporary file and write the credentials content to it
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(gcs_credentials_content.encode())
+        temp_credentials_path = temp_file.name
 
-        # Set GS_CREDENTIALS to the path of the temporary file
-        GS_CREDENTIALS = temp_credentials_path
+    # Set GS_CREDENTIALS to the path of the temporary file
+    GS_CREDENTIALS = temp_credentials_path
 
-        logger.info(f"Temporary GCS credentials file created at: {temp_credentials_path}")
-    except Exception as e:
-        logger.error(f"Error processing GCS credentials: {e}")
-        raise ValueError(f"Error processing GCS credentials: {e}")
-
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_BUCKET_NAME = 'stimme-data'
-GS_DEFAULT_ACL = 'publicRead'
+    logger.info(f"Temporary GCS credentials file created at: {temp_credentials_path}")
+    logger.info(f"GS_CREDENTIALS set to: {GS_CREDENTIALS}")
+else:
+    logger.error("Environment variable GS_CREDENTIALS not found or is empty.")
 
 
 
