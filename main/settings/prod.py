@@ -26,6 +26,11 @@ DATABASES = {
     )
 }
 
+# Media File Settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/media/'
+
+
 
 LOGGING = {
     'version': 1,

@@ -39,6 +39,12 @@ DATABASES = {
 #     }
 # }
 
+# Media File Settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
 # CORS settings
 CORS_ALLOW_CREDENTIALS = True
 
