@@ -1,3 +1,4 @@
+import json
 import os
 from .common import *
 import dj_database_url
@@ -28,8 +29,13 @@ DATABASES = {
 
 # Media File Settings
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/media/'
 
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'stimme-data'
+GS_CREDENTIALS = json.loads(os.environ.get('GS_CREDENTIALS'))
+GS_DEFAULT_ACL = 'publicRead'
 
 
 LOGGING = {
