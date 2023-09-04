@@ -1,3 +1,4 @@
+import tempfile
 import json
 import os
 from .common import *
@@ -30,11 +31,22 @@ DATABASES = {
 # Media File Settings
 MEDIA_URL = '/media/'
 
+# Google Cloud Storeage Settings
+
+# Load the JSON content from the environment variable
+gcs_credentials_content = os.environ.get('GCS_CREDENTIALS_CONTENT')
+if gcs_credentials_content:
+    # Create a temporary file and write the credentials content to it
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(gcs_credentials_content.encode())
+        temp_credentials_path = temp_file.name
+
+    # Set GS_CREDENTIALS to the path of the temporary file
+    GS_CREDENTIALS = temp_credentials_path
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'stimme-data'
-GS_CREDENTIALS = json.loads(os.environ.get('GS_CREDENTIALS'))
 GS_DEFAULT_ACL = 'publicRead'
 
 
