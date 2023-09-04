@@ -37,25 +37,9 @@ MEDIA_URL = '/media/'
 
 # Google cloud storage setiings
 
-# Load the JSON content from the environment variable
-gcs_credentials_content = os.environ.get('GS_CREDENTIALS')
-if gcs_credentials_content:
-    # Create a temporary file and write the credentials content to it
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-        temp_file.write(gcs_credentials_content.encode())
-        temp_credentials_path = temp_file.name
-
-    # Set GS_CREDENTIALS to the path of the temporary file
-    GS_CREDENTIALS = temp_credentials_path
-
-    logger.info(
-        f"Temporary GCS credentials file created at: {temp_credentials_path}")
-    logger.info(f"GS_CREDENTIALS set to: {GS_CREDENTIALS}")
-else:
-    logger.error("Environment variable GS_CREDENTIALS not found or is empty.")
-
-
+GOOGLE_APPLICATION_CREDENTIALS = os.environ["GS_CREDENTIALS"]
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+STORAGES = {"default": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}}
 GS_BUCKET_NAME = 'stimme-data'
 
 
