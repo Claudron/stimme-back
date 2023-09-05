@@ -12,11 +12,14 @@ import json
 import os
 from django.core.wsgi import get_wsgi_application
 
-# Convert the key content into a temporary file and set GOOGLE_APPLICATION_CREDENTIALS
-key_dict = json.loads(os.environ.get("GS_CREDENTIALS"))
-with tempfile.NamedTemporaryFile(delete=False) as temp:
-    temp.write(json.dumps(key_dict).encode('utf-8'))
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp.name
+GS_CREDENTIALS_CONTENT = os.environ.get("GS_CREDENTIALS")
+
+# Convert the key content into a temporary file and set GOOGLE_APPLICATION_CREDENTIALS only if GS_CREDENTIALS is set
+if GS_CREDENTIALS_CONTENT:
+    key_dict = json.loads(GS_CREDENTIALS_CONTENT)
+    with tempfile.NamedTemporaryFile(delete=False) as temp:
+        temp.write(json.dumps(key_dict).encode('utf-8'))
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp.name
 
 # Set default Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'main.settings.dev')
