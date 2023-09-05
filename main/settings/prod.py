@@ -89,6 +89,7 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 #Email
 
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+DEFAULT_FROM_EMAIL = 'manzarimakesmusic@gmail.com'
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
 
 
