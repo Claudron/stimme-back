@@ -88,8 +88,7 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 
 #Email
 
-# EMAIL_HOST = 'live.smtp.mailtrap.io'
-# EMAIL_HOST_USER = 'api'
-# EMAIL_HOST_PASSWORD = os.environ.get("MAILTRAP_PASSWORD")
-# EMAIL_PORT = '465'
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
 
