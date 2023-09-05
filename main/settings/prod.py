@@ -91,5 +91,5 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 EMAIL_HOST = 'live.smtp.mailtrap.io'
 EMAIL_HOST_USER = 'api'
 EMAIL_HOST_PASSWORD = os.environ.get("MAILTRAP_PASSWORD")
-EMAIL_PORT = '587'
+EMAIL_PORT = '465'
 
