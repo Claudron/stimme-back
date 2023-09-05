@@ -88,7 +88,10 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 
 #Email
 
-EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+SENDGRID_EMAIL_HOST = "smtp.sendgrid.net"
+SENDGRID_EMAIL_PORT = 465
+SENDGRID_EMAIL_USERNAME = "apikey"
+SENDGRID_EMAIL_PASSWORD = os.environ.get("SENDGRID_API_KEY")
+
 
 
