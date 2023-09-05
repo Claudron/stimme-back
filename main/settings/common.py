@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'core',
     'content',
     'exercises.apps.ExercisesConfig',
+    'sendgrid'
 
 ]
 
