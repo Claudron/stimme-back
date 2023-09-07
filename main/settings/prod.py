@@ -86,8 +86,8 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 
+DOMAIN = 'stimme.onrender.com'
 SITE_NAME = 'MANZARI MUSIC'
-SITE_DOMAIN = 'stimme-back.onrender.com'
 
 
 DJOSER = {
