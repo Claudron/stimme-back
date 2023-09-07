@@ -134,6 +134,22 @@ REST_FRAMEWORK = {
     ),
 }
 
+DJOSER = {
+
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer',
+
+    },
+    'EMAIL': {
+        'activation': 'core.views.CustomActivationEmail',
+        'password_reset': 'core.views.CustomPasswordResetEmail',
+    },
+}
 
 SIMPLE_JWT = {
     "USER_AUTHENTICATION_RULE": "core.custom_authentication.custom_user_authentication_rule",

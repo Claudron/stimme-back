@@ -101,22 +101,3 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 2525
 DEFAULT_FROM_EMAIL = 'from@claudron.com'
-
-
-
-DJOSER = {
-
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {
-        'user_create': 'core.serializers.UserCreateSerializer',
-        'current_user': 'core.serializers.UserSerializer',
-
-    },
-    'EMAIL': {
-        'activation': 'core.views.CustomActivationEmail',
-        'password_reset': 'core.views.CustomPasswordResetEmail',
-    },
-}

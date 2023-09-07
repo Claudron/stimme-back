@@ -86,28 +86,6 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-DOMAIN = 'stimme.onrender.com'
-SITE_NAME = 'MANZARI MUSIC'
-
-
-DJOSER = {
-
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {
-        'user_create': 'core.serializers.UserCreateSerializer',
-        'current_user': 'core.serializers.UserSerializer',
-
-    },
-    'EMAIL': {
-        'activation': 'core.views.CustomActivationEmail',
-        'password_reset': 'core.views.CustomPasswordResetEmail',
-    },
-}
-
-
 #Email
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 DEFAULT_FROM_EMAIL = 'stimme@manzarimusic.com'
