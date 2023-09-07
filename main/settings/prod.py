@@ -86,9 +86,26 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-#Djoser
-DJOSER['DOMAIN'] = 'stimme.onrender.com'
-DJOSER['SITE_NAME'] = 'Stimmbildung MANZARI MUSIC'
+SITE_NAME = 'MANZARI MUSIC'
+SITE_DOMAIN = 'stimme-back.onrender.com'
+
+
+DJOSER = {
+
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer',
+
+    },
+    'EMAIL': {
+        'activation': 'core.views.CustomActivationEmail',
+        'password_reset': 'core.views.CustomPasswordResetEmail',
+    },
+}
 
 
 #Email

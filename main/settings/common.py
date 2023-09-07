@@ -141,22 +141,7 @@ SIMPLE_JWT = {
     # "ACCESS_TOKEN_LIFETIME": timedelta(seconds=30),
 }
 
-DJOSER = {
 
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {
-        'user_create': 'core.serializers.UserCreateSerializer',
-        'current_user': 'core.serializers.UserSerializer',
-
-    },
-    'EMAIL': {
-        'activation': 'core.views.CustomActivationEmail',
-        'password_reset': 'core.views.CustomPasswordResetEmail',
-    },
-}
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.AllowAllUsersModelBackend',
