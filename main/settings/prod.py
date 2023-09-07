@@ -86,8 +86,12 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-#Email
+#Djoser
+DJOSER['DOMAIN'] = 'stimme.onrender.com'
+DJOSER['SITE_NAME'] = 'Stimmbildung MANZARI MUSIC'
 
+
+#Email
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 DEFAULT_FROM_EMAIL = 'stimme@manzarimusic.com'
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
