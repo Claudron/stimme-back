@@ -39,6 +39,9 @@ class ExerciseMethod(models.Model):
 
         super().delete(*args, **kwargs)
 
+    def __str__(self):
+        return self.name
+
 
 class ExerciseMethodFile(models.Model):
     exercise_method = models.ForeignKey(
