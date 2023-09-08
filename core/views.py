@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import  UserCreateSerializer, CustomTokenObtainPairSerializer
+from .serializers import UserCreateSerializer, CustomTokenObtainPairSerializer
 from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
 from djoser.email import ActivationEmail, PasswordResetEmail
@@ -27,6 +27,7 @@ from rest_framework_simplejwt.views import TokenRefreshView as SimpleJWTTokenRef
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 #  Auth Token
+
 
 class TokenCreateView(DjoserTokenCreateView):
     authentication_classes = []
@@ -49,21 +50,22 @@ class RefreshTokenView(SimpleJWTTokenRefreshView):
         try:
             refresh_token = request.COOKIES.get('refresh_token')
             token = RefreshToken(refresh_token)
-            
+
             response = Response({
                 'access': str(token.access_token),
                 'refresh': str(token),
             })
-            response.set_cookie("access_token", str(token.access_token), httponly=True)
+            response.set_cookie("access_token", str(
+                token.access_token), httponly=True)
             response.set_cookie("refresh_token", str(token), httponly=True)
             return response
-        
+
         except (InvalidToken, TokenError) as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
-    authentication_classes = []  
+    authentication_classes = []
 
     def post(self, request):
         try:
@@ -132,12 +134,13 @@ class CustomActivationEmail(ActivationEmail):
         user = context.get("user")
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
-        
+
         # Fetch the domain from Django settings
-        context["domain"] = django_settings.custom_email_domain
-        
+        context["domain"] = django_settings.CUSTOM_EMAIL_DOMAIN
+
         context["url"] = djoser_settings.ACTIVATION_URL.format(**context)
         return context
+
 
 class CustomPasswordResetEmail(PasswordResetEmail):
     template_name = "email/password_reset.html"
@@ -149,6 +152,7 @@ class CustomPasswordResetEmail(PasswordResetEmail):
         user = context.get("user")
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
-        context["domain"] = django_settings.custom_email_domain
-        context["url"] =  djoser_settings.PASSWORD_RESET_CONFIRM_URL.format(**context)
+        context["domain"] = django_settings.CUSTOM_EMAIL_DOMAIN
+        context["url"] = djoser_settings.PASSWORD_RESET_CONFIRM_URL.format(
+            **context)
         return context
