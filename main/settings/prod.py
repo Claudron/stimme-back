@@ -92,3 +92,5 @@ DEFAULT_FROM_EMAIL = 'stimme@manzarimusic.com'
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
 
 
+# Djoser custom email DOMAIN, activation and resetpassword
+CUSTOM_EMAIL_DOMAIN = os.environ.get('CUSTOM_EMAIL_DOMAIN')

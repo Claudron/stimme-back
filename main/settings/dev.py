@@ -101,3 +101,6 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 2525
 DEFAULT_FROM_EMAIL = 'from@claudron.com'
+
+# Djoser custom email DOMAIN, activation and resetpassword
+CUSTOM_EMAIL_DOMAIN = 'localhost:5173'

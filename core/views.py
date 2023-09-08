@@ -16,7 +16,8 @@ from djoser.views import TokenCreateView as DjoserTokenCreateView
 from djoser.views import UserViewSet
 from djoser.email import ActivationEmail, PasswordResetEmail
 from djoser import utils
-from djoser.conf import settings
+from djoser.conf import settings as djoser_settings
+from django.conf import settings as django_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -24,7 +25,6 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenRefreshView as SimpleJWTTokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-
 
 #  Auth Token
 
@@ -127,13 +127,16 @@ class CustomActivationEmail(ActivationEmail):
     template_name = "email/activation.html"
 
     def get_context_data(self):
-
         context = super().get_context_data()
 
         user = context.get("user")
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
-        context["url"] = settings.ACTIVATION_URL.format(**context)
+        
+        # Fetch the domain from Django settings
+        context["domain"] = django_settings.custom_email_domain
+        
+        context["url"] = djoser_settings.ACTIVATION_URL.format(**context)
         return context
 
 class CustomPasswordResetEmail(PasswordResetEmail):
@@ -146,6 +149,6 @@ class CustomPasswordResetEmail(PasswordResetEmail):
         user = context.get("user")
         context["uid"] = utils.encode_uid(user.pk)
         context["token"] = default_token_generator.make_token(user)
-        context["domain"] = "localhost:5173"
-        context["url"] =  settings.PASSWORD_RESET_CONFIRM_URL.format(**context)
+        context["domain"] = django_settings.custom_email_domain
+        context["url"] =  djoser_settings.PASSWORD_RESET_CONFIRM_URL.format(**context)
         return context
