@@ -38,10 +38,9 @@ class TokenCreateView(DjoserTokenCreateView):
         token = RefreshToken.for_user(self.user)
 
         response = Response({"detail": "Success"})
-        response.set_cookie("access_token", str(
-            token.access_token), httponly=True)
-        response.set_cookie("refresh_token", str(
-            token), httponly=True)
+        response.set_cookie("access_token", str(token.access_token), samesite='None', secure=True, httponly=True)
+        response.set_cookie("refresh_token", str(token), samesite='None', secure=True, httponly=True)
+
         return response
 
 
