@@ -15,7 +15,8 @@ DEBUG = False
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-ALLOWED_HOSTS = ["stimme.onrender.com", "www.stimme.onrender.com", "stimme-back.onrender.com", "www.stimme-back.onrender.com"]
+ALLOWED_HOSTS = ["stimme.onrender.com", "www.stimme.onrender.com",
+                 "stimme-back.onrender.com", "www.stimme-back.onrender.com"]
 
 SERVE_REACT_FRONTEND = True
 
@@ -77,6 +78,9 @@ CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = os.environ.get("CORS_TRUSTED_ORIGINS", "").split(",")
 
+# token create and refresh behaviorin core.views
+COOKIE_SECURE_SETTING = True
+
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'Lax'
@@ -86,7 +90,7 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-#Email
+# Email
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 DEFAULT_FROM_EMAIL = 'stimme@manzarimusic.com'
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]

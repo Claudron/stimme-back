@@ -82,6 +82,9 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
 ]
 
+#token create and refresh behaviorin core.views
+COOKIE_SECURE_SETTING = False
+
 # As you're in development mode, these are set to False.
 # They should be True in a production setting.
 CSRF_COOKIE_SECURE = False
