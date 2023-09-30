@@ -34,7 +34,7 @@ DATABASES = {
 #         'NAME': 'stimme_local',
 #         'USER': 'claudron',
 #         'PASSWORD': 'open',
-#         'HOST': 'postgres',  
+#         'HOST': 'postgres',
 #         'PORT': '5432',
 #     }
 # }
@@ -43,6 +43,12 @@ DATABASES = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Google cloud storage setiings
+
+# print(os.environ.get("GS_CREDENTIALS"))
+GOOGLE_APPLICATION_CREDENTIALS = os.environ.get("GS_CREDENTIALS", "")
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'stimme-test'
 
 
 # CORS settings
@@ -52,9 +58,9 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://0.0.0.0:3000",  
-    "http://frontend:3000",  
-    "http://backend:8000",    
+    "http://0.0.0.0:3000",
+    "http://frontend:3000",
+    "http://backend:8000",
     "http://0.0.0.0:8000",
     "http://localhost:8000",
 ]
@@ -75,14 +81,14 @@ CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 # You'll add your production frontend domain when you have it.
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    "http://0.0.0.0:3000",  
-    "http://frontend:3000",  
-    "http://backend:8000",    
+    "http://0.0.0.0:3000",
+    "http://frontend:3000",
+    "http://backend:8000",
     "http://0.0.0.0:8000",
     "http://localhost:8000",
 ]
 
-#token create and refresh behaviorin core.views
+# token create and refresh behaviorin core.views
 COOKIE_SECURE_SETTING = False
 
 # As you're in development mode, these are set to False.

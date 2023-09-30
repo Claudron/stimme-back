@@ -38,7 +38,6 @@ MEDIA_URL = '/media/'
 
 # Google cloud storage setiings
 
-print(os.environ.get("GS_CREDENTIALS"))
 GOOGLE_APPLICATION_CREDENTIALS = os.environ["GS_CREDENTIALS"]
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'stimme-data'

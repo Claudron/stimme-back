@@ -12,7 +12,16 @@ import json
 import os
 from django.core.wsgi import get_wsgi_application
 
-GS_CREDENTIALS_CONTENT = os.environ.get("GS_CREDENTIALS")
+# Conditionally import and use dotenv if it's available
+try:
+    import dotenv
+    dotenv_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), '.env')
+    dotenv.load_dotenv(dotenv_path)
+except ImportError:
+    pass
+
+GS_CREDENTIALS_CONTENT = os.environ.get('GS_CREDENTIALS')
 
 # Convert the key content into a temporary file and set GOOGLE_APPLICATION_CREDENTIALS only if GS_CREDENTIALS is set
 if GS_CREDENTIALS_CONTENT:
