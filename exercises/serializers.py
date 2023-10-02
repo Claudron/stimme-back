@@ -5,7 +5,7 @@ from .models import ExerciseMethod, ExerciseMethodFile, Exercise, UserExercisePl
 class ExerciseMethodFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExerciseMethodFile
-        fields = '__all__'
+        fields = ['id', 'direction', 'range', 'tempo']
 
 
 class ExerciseMethodSerializer(serializers.ModelSerializer):
