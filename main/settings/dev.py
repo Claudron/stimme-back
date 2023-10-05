@@ -63,6 +63,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://backend:8000",
     "http://0.0.0.0:8000",
     "http://localhost:8000",
+    "http://127.0.0.1:8000",
 ]
 
 CORS_ALLOW_HEADERS = (
@@ -86,6 +87,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://backend:8000",
     "http://0.0.0.0:8000",
     "http://localhost:8000",
+    "http://127.0.0.1:8000",
 ]
 
 # token create and refresh behaviorin core.views
@@ -112,4 +114,4 @@ EMAIL_PORT = 2525
 DEFAULT_FROM_EMAIL = 'from@claudron.com'
 
 # Djoser custom email DOMAIN, activation and resetpassword
-CUSTOM_EMAIL_DOMAIN = 'localhost:5173'
+CUSTOM_EMAIL_DOMAIN = 'localhost:3000'
