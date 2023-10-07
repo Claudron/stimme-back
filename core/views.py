@@ -39,9 +39,9 @@ class TokenCreateView(DjoserTokenCreateView):
 
         response = Response({"detail": "Success"})
         response.set_cookie("access_token", str(
-            token.access_token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
+            token.access_token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True, domain='onrender.com')
         response.set_cookie("refresh_token", str(
-            token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
+            token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True, domain='onrender.com')
 
         return response
 
@@ -57,9 +57,9 @@ class RefreshTokenView(SimpleJWTTokenRefreshView):
                 'refresh': str(token),
             })
             response.set_cookie("access_token", str(
-                token.access_token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
+                token.access_token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True, domain='onrender.com')
             response.set_cookie("refresh_token", str(
-                token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
+                token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True, domain='onrender.com')
             return response
 
         except (InvalidToken, TokenError) as e:
