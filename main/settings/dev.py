@@ -89,17 +89,22 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
+# Cookie settings
+COOKIE_DOMAIN = None
+COOKIE_SECURE = True
+COOKIE_HTTPONLY = True
+COOKIE_SAMESITE = 'None' 
 
-# token create and refresh behaviorin core.views
-COOKIE_SECURE_SETTING = False
 
 # As you're in development mode, these are set to False.
 # They should be True in a production setting.
+CSRF_COOKIE_DOMAIN = None
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'none'
 
 # Session settings for development
+SESSION_COOKIE_DOMAIN = None
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'none'

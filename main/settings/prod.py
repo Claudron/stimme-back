@@ -74,16 +74,21 @@ CORS_ALLOW_HEADERS = (
 
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 
+# Cookie settings
+COOKIE_DOMAIN = '.onrender.com'
+COOKIE_SECURE = True
+COOKIE_HTTPONLY = True
+COOKIE_SAMESITE = 'None'
+
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = os.environ.get("CORS_TRUSTED_ORIGINS", "").split(",")
 
-# token create and refresh behaviorin core.views
-COOKIE_SECURE_SETTING = True
-
+CSRF_COOKIE_DOMAIN = '.onrender.com'
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = 'None'
 
+SESSION_COOKIE_DOMAIN = '.onrender.com'
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'None'

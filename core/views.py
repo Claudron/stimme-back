@@ -3,6 +3,7 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidTok
 from .serializers import CustomTokenObtainPairSerializer, InActiveUser
 from django.contrib.auth.forms import AuthenticationForm
 from templated_mail.mail import BaseEmailMessage
+from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -38,15 +39,24 @@ class TokenCreateView(DjoserTokenCreateView):
         token = RefreshToken.for_user(self.user)
 
         response = Response({"detail": "Success"})
-        response.set_cookie("access_token", str(
-            token.access_token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
-        response.set_cookie("refresh_token", str(
-            token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
-
+        self._set_cookie(response, 'access_token', str(token.access_token))
+        self._set_cookie(response, 'refresh_token', str(token))
+        
         return response
+
+    def _set_cookie(self, response, key, value):
+        response.set_cookie(
+            key=key, 
+            value=value, 
+            domain=settings.COOKIE_DOMAIN, 
+            secure=settings.COOKIE_SECURE, 
+            httponly=settings.COOKIE_HTTPONLY, 
+            samesite=settings.COOKIE_SAMESITE
+        )
 
 
 class RefreshTokenView(SimpleJWTTokenRefreshView):
+    
     def post(self, request, *args, **kwargs):
         try:
             refresh_token = request.COOKIES.get('refresh_token')
@@ -56,14 +66,23 @@ class RefreshTokenView(SimpleJWTTokenRefreshView):
                 'access': str(token.access_token),
                 'refresh': str(token),
             })
-            response.set_cookie("access_token", str(
-                token.access_token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
-            response.set_cookie("refresh_token", str(
-                token), samesite='None', secure=django_settings.COOKIE_SECURE_SETTING, httponly=True)
+            self._set_cookie(response, 'access_token', str(token.access_token))
+            self._set_cookie(response, 'refresh_token', str(token))
+
             return response
 
         except (InvalidToken, TokenError) as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def _set_cookie(self, response, key, value):
+        response.set_cookie(
+            key=key, 
+            value=value, 
+            domain=settings.COOKIE_DOMAIN, 
+            secure=settings.COOKIE_SECURE, 
+            httponly=settings.COOKIE_HTTPONLY, 
+            samesite=settings.COOKIE_SAMESITE
+        )
 
 
 class LogoutView(APIView):
