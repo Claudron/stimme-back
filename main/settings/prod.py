@@ -16,7 +16,9 @@ DEBUG = False
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALLOWED_HOSTS = ["stimme.onrender.com", "www.stimme.onrender.com",
-                 "stimme-back.onrender.com", "www.stimme-back.onrender.com"]
+                 "stimme-back.onrender.com", "www.stimme-back.onrender.com", 
+                 "stimme.manzarimusic.com", "www.stimme.manzarimusic.com.com",
+                 "stimme-back.manzarimusic.com.com", "www.stimme-back.manzarimusic.com.com"]
 
 SERVE_REACT_FRONTEND = True
 
